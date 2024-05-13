@@ -1,23 +1,35 @@
+// src/components/auth/Login.tsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/slices/userSlice";
 
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     try {
       const response = await axios.post("/api/auth/login", { email, password });
-      console.log("esponse.data",response.data);
-      setError("");
-      router.push("/dashboard"); //
-      // Handle successful login (e.g., redirect to dashboard)
+      const userData = response.data.user;
+      dispatch(
+        setUser({
+          userID: userData.userID,
+          username: userData.username,
+          email: userData.email,
+          role: userData.role,
+          languagePreference: userData.languagePreference,
+          isAuthenticated: true,
+        })
+      );
+      router.push("/dashboard");
     } catch (err) {
       setError("Invalid email or password");
     }

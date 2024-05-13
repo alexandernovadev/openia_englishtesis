@@ -51,7 +51,16 @@ const loginHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
     );
 
-    return res.status(200).json({ message: "Login successful" });
+    return res.status(200).json({
+      message: "Login successful",
+      user: {
+        userID: user.userID,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        languagePreference: user.languagePreference,
+      },
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" });
