@@ -2,6 +2,7 @@
 import { GetServerSideProps } from "next";
 import { verifyToken } from "../utils/auth";
 import { getCookie } from "../utils/cookies";
+import GenerateText from "@/components/exams/GenerateTexts";
 
 const Dashboard: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const Dashboard: React.FC = () => {
           Dashboard
         </h2>
         <p className="text-center text-white">Welcome to your dashboard!</p>
+        <GenerateText />
       </div>
     </div>
   );
