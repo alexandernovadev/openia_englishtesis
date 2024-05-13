@@ -1,62 +1,68 @@
-// src/components/GenerateText.tsx
-import React, { useState } from 'react';
+// components/GenerateTexts.tsx
+import React, { useState, useRef } from 'react';
 
-const GenerateText: React.FC = () => {
-  const [prompt, setPrompt] = useState<string>('');
-  const [response, setResponse] = useState<string>('');
+const GenerateTexts: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [text, setText] = useState('');
+  const [error, setError] = useState('');
+  const textRef = useRef<HTMLDivElement>(null);
 
   const handleGenerateText = async () => {
-    setResponse('');
-    const response = await fetch('/api/openia/generatetexts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ prompt }),
-    });
+    setLoading(true);
+    setText('');
+    setError('');
 
-    if (response.body) {
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder('utf-8');
-      let result = '';
+    try {
+      const response = await fetch('/api/openia/generatetexts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: 'World War I' }),
+      });
 
-      const processText = ({ done, value }: ReadableStreamReadResult<Uint8Array>): Promise<void> => {
-        if (done) {
-          console.log('Stream complete');
-          return Promise.resolve();
-        }
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
 
+      while (!done) {
+        const { value, done: streamDone } = await reader!.read();
+        done = streamDone;
         const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n').filter(Boolean);
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = JSON.parse(line.substring(6));
-            if (data.choices[0].delta?.content) {
-              result += data.choices[0].delta.content;
-              setResponse(result);
-            }
-          }
+        setText((prevText) => prevText + chunk);
+        if (textRef.current) {
+          textRef.current.scrollTop = textRef.current.scrollHeight;
         }
-
-        return reader.read().then(processText);
-      };
-
-      reader.read().then(processText);
+      }
+    } catch (err) {
+      setError('Failed to fetch the generated text.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <textarea
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-        placeholder="Enter your prompt here"
-      />
-      <button onClick={handleGenerateText}>Generate Text</button>
-      <pre>{response}</pre>
+    <div className="max-w-2xl mx-auto p-4">
+      <button
+        onClick={handleGenerateText}
+        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
+        disabled={loading}
+      >
+        {loading ? 'Generating...' : 'Generate Text'}
+      </button>
+      {error && <div className="mt-4 text-red-500">{error}</div>}
+      <div
+        ref={textRef}
+        className="mt-4 p-4 border rounded h-64 overflow-y-auto "
+      >
+        {text.split('\n').map((line, index) => (
+          <p key={index} className="mb-2">
+            {line}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default GenerateText;
+export default GenerateTexts;
