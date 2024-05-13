@@ -31,3 +31,27 @@ body {
     text-wrap: balance;
   }
 }
+
+
+h1 {
+  @apply text-4xl font-bold text-green-600;
+}
+
+h2 {
+  @apply text-2xl font-semibold text-blue-600;
+}
+ h3 {
+  @apply text-2xl font-bold;
+}
+
+h4 {
+  @apply text-xl font-bold;
+}
+
+h5,h6 {
+  @apply text-lg font-bold;
+}
+p {
+  @apply text-base py-2;
+  
+}

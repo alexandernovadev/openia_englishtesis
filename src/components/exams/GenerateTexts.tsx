@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import Markdown from "react-markdown";
 
 const GenerateTexts: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -55,9 +56,7 @@ const GenerateTexts: React.FC = () => {
         className="mt-4 p-4 border rounded h-64 overflow-y-auto"
       >
         {text.split("\n").map((line, index) => (
-          <p key={index} className="mb-2">
-            {line}
-          </p>
+          <Markdown key={index}>{line}</Markdown>
         ))}
       </div>
     </div>

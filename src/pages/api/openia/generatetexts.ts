@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         role: 'system',
         content: `
         Dame un título, un subtítulo y un contenido de la primera guerra mundial.
+        en markdown
       `,
       },
       { role: 'user', content: prompt },
