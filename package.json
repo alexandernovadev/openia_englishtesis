@@ -22,7 +22,9 @@
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
-    "react-redux": "^9.1.2"
+    "react-redux": "^9.1.2",
+    "rehype-react": "^8.0.0",
+    "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

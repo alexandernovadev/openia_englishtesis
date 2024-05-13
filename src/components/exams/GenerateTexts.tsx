@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
-import Markdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
 
 const GenerateTexts: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -41,6 +42,39 @@ const GenerateTexts: React.FC = () => {
     }
   };
 
+  const handleWordClick = (word: string) => {
+    console.log(word);
+  };
+
+  const renderParagraph = (props: any) => {
+    const { children } = props;
+    return (
+      <p>
+        {React.Children.map(children, (child, index) => {
+          if (typeof child === "string") {
+            const words = child.split(" ");
+            return words.map((word, wordIndex) => (
+              <React.Fragment key={wordIndex}>
+                <span
+                  onClick={() => handleWordClick(word)}
+                  className="cursor-pointer"
+                >
+                  {word}
+                </span>
+                {wordIndex < words.length - 1 ? " " : ""}
+              </React.Fragment>
+            ));
+          }
+          return child;
+        })}
+      </p>
+    );
+  };
+
+  const components = {
+    p: renderParagraph
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-4">
       <button
@@ -55,9 +89,9 @@ const GenerateTexts: React.FC = () => {
         ref={textRef}
         className="mt-4 p-4 border rounded h-64 overflow-y-auto"
       >
-        {text.split("\n").map((line, index) => (
-          <Markdown key={index}>{line}</Markdown>
-        ))}
+        <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+          {text}
+        </ReactMarkdown>
       </div>
     </div>
   );
