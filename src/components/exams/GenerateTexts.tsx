@@ -1,24 +1,23 @@
-// components/GenerateTexts.tsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 
 const GenerateTexts: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [text, setText] = useState('');
-  const [error, setError] = useState('');
+  const [text, setText] = useState("");
+  const [error, setError] = useState("");
   const textRef = useRef<HTMLDivElement>(null);
 
   const handleGenerateText = async () => {
     setLoading(true);
-    setText('');
-    setError('');
+    setText("");
+    setError("");
 
     try {
-      const response = await fetch('/api/openia/generatetexts', {
-        method: 'POST',
+      const response = await fetch("/api/openia/generatetexts", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: 'World War I' }),
+        body: JSON.stringify({ prompt: "World War I" }),
       });
 
       const reader = response.body?.getReader();
@@ -35,7 +34,7 @@ const GenerateTexts: React.FC = () => {
         }
       }
     } catch (err) {
-      setError('Failed to fetch the generated text.');
+      setError("Failed to fetch the generated text.");
     } finally {
       setLoading(false);
     }
@@ -48,14 +47,14 @@ const GenerateTexts: React.FC = () => {
         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
         disabled={loading}
       >
-        {loading ? 'Generating...' : 'Generate Text'}
+        {loading ? "Generating..." : "Generate Text"}
       </button>
       {error && <div className="mt-4 text-red-500">{error}</div>}
       <div
         ref={textRef}
-        className="mt-4 p-4 border rounded h-64 overflow-y-auto "
+        className="mt-4 p-4 border rounded h-64 overflow-y-auto"
       >
-        {text.split('\n').map((line, index) => (
+        {text.split("\n").map((line, index) => (
           <p key={index} className="mb-2">
             {line}
           </p>

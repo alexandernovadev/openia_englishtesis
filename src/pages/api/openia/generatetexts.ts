@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       {
         role: 'system',
         content: `
-        Dame un title un subtitulo y un contenido de la primera guerra mundial
+        Dame un título, un subtítulo y un contenido de la primera guerra mundial.
       `,
       },
       { role: 'user', content: prompt },
@@ -27,13 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     temperature: 0.3,
   });
 
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'application/octet-stream');
+  res.setHeader('Transfer-Encoding', 'chunked');
   res.status(200);
 
   for await (const chunk of stream) {
     const piece = chunk.choices[0].delta.content || '';
-    // console.log(piece);
-    
     res.write(piece);
   }
 
