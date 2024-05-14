@@ -93,6 +93,7 @@ const Dashboard: React.FC = () => {
 
         <GenerateTexts
           level={level}
+          paragraphs={paragraphs}
           setTopicUserDB={setTopicUserDB}
           onTextUpdate={setGeneratedText}
         />
