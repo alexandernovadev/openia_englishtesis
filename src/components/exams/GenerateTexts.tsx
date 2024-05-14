@@ -1,15 +1,25 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
 
-const GenerateTexts: React.FC = () => {
+interface GenerateTextsProps {
+  level?: string;
+  paragraphs?: number;
+  onTextUpdate?: (text: string) => void;
+}
+
+const GenerateTexts = ({
+  level = "B2",
+  paragraphs = 2,
+  onTextUpdate,
+}: GenerateTextsProps) => {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
   const [topicUser, setTopicUser] = useState("");
   const [error, setError] = useState("");
   const textRef = useRef<HTMLDivElement>(null);
 
-  const handleGenerateText = async (e:any ) => {
+  const handleGenerateText = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     setText("");
@@ -21,7 +31,11 @@ const GenerateTexts: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: topicUser || "First Revolution United Kingdom" }),
+        body: JSON.stringify({
+          prompt: topicUser || "First Revolution United Kingdom",
+          level,
+          paragraphs,
+        }),
       });
 
       const reader = response.body?.getReader();
@@ -32,7 +46,10 @@ const GenerateTexts: React.FC = () => {
         const { value, done: streamDone } = await reader!.read();
         done = streamDone;
         const chunk = decoder.decode(value, { stream: true });
-        setText((prevText) => prevText + chunk);
+        setText((prevText) => {
+          const newText = prevText + chunk;
+          return newText;
+        });
         if (textRef.current) {
           textRef.current.scrollTop = textRef.current.scrollHeight;
         }
@@ -43,6 +60,12 @@ const GenerateTexts: React.FC = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (onTextUpdate) {
+      onTextUpdate(text);
+    }
+  }, [text, onTextUpdate]);
 
   const handleWordClick = (word: string) => {
     console.log(word);
@@ -98,8 +121,13 @@ const GenerateTexts: React.FC = () => {
       {error && <div className="mt-4 text-red-500">{error}</div>}
       <div
         ref={textRef}
-        className="mt-4 p-4 border rounded h-auto max-h-[680px] h-m overflow-y-scroll"
+        className="mt-4 p-4 border rounded h-auto max-h-[620px] h-m overflow-y-scroll"
       >
+        {text.length === 0 && (
+          <div className="text-center text-gray-400">
+            No text generated yet.
+          </div>
+        )}
         <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
           {text}
         </ReactMarkdown>
