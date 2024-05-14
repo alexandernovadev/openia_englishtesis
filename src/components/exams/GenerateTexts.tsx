@@ -5,12 +5,14 @@ import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
 interface GenerateTextsProps {
   level?: string;
   paragraphs?: number;
+  setTopicUserDB?: (text: string) => void;
   onTextUpdate?: (text: string) => void;
 }
 
 const GenerateTexts = ({
   level = "B2",
-  paragraphs = 2,
+  setTopicUserDB,
+  paragraphs = 1,
   onTextUpdate,
 }: GenerateTextsProps) => {
   const [loading, setLoading] = useState(false);
@@ -106,7 +108,10 @@ const GenerateTexts = ({
         <input
           type="text"
           value={topicUser}
-          onChange={(e) => setTopicUser(e.target.value)}
+          onChange={(e) => {
+            setTopicUser(e.target.value);
+            setTopicUserDB && setTopicUserDB(e.target.value);
+          }}
           placeholder="Elige un tema del texto que IAtin te generará..."
           className="px-4 py-2 flex-1 mr-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
         />

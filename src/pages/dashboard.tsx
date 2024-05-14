@@ -5,24 +5,32 @@ import GenerateTexts from "../components/exams/GenerateTexts";
 import DashboardLayout from "@/components/layouts/DashBoardLayout";
 import { IoIosSave } from "react-icons/io";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Dashboard: React.FC = () => {
   const [level, setLevel] = useState("A1");
   const [paragraphs, setParagraphs] = useState(1);
   const [content, setContent] = useState("");
+  const [topic, setTopicUserDB] = useState("");
   const [generatedText, setGeneratedText] = useState("");
 
   useEffect(() => {
     setContent(generatedText);
   }, [generatedText]);
 
-  const handleSave = () => {
-    // Implement the save functionality here if needed
-    console.log("Save clicked", {
-      level,
-      paragraphs,
-      content,
-    });
+  const handleSave = async () => {
+    try {
+      const response = await axios.post("/api/lectures", {
+        lectureID: new Date().getTime().toString(), // Generar un ID único
+        content,
+        level,
+        topic: "Generated Topic", // Puedes ajustar esto según sea necesario
+      });
+
+      console.log("Lecture saved successfully", response.data);
+    } catch (error) {
+      console.error("Error saving the lecture", error);
+    }
   };
 
   return (
@@ -85,7 +93,7 @@ const Dashboard: React.FC = () => {
 
         <GenerateTexts
           level={level}
-          paragraphs={paragraphs}
+          setTopicUserDB={setTopicUserDB}
           onTextUpdate={setGeneratedText}
         />
       </div>
