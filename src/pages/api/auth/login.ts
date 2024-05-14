@@ -46,7 +46,7 @@ const loginHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         httpOnly: true,
         secure: process.env.NODE_ENV !== "development",
         sameSite: "strict",
-        maxAge: 3600,
+        maxAge: 3600 * 24* 7, /// 1 week
         path: "/",
       })
     );

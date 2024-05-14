@@ -18,12 +18,8 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply bg-gray-900;
+  overflow: hidden;
 }
 
 @layer utilities {
@@ -40,7 +36,8 @@ h1 {
 h2 {
   @apply text-2xl font-semibold text-blue-600;
 }
- h3 {
+
+h3 {
   @apply text-2xl font-bold;
 }
 
@@ -48,10 +45,12 @@ h4 {
   @apply text-xl font-bold;
 }
 
-h5,h6 {
+h5,
+h6 {
   @apply text-lg font-bold;
 }
+
 p {
   @apply text-base py-2;
-  
+
 }
