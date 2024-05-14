@@ -11,20 +11,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const { prompt } = req.body;
-
+  
   const stream = await openai.chat.completions.create({
     stream: true,
     messages: [
       {
         role: 'system',
         content: `
-        Dame un título, un subtítulo y un contenido de la primera guerra mundial.
-        en markdown
+        Make a title, a subtitle and 3 paragraphs(without titles or subtitles) about '${prompt}'.
+        1 ALL TEXT must be in english .
+        2in format markdown
       `,
       },
-      { role: 'user', content: prompt },
     ],
-    model: 'gpt-3.5-turbo-1106',
+    model: 'gpt-3.5-turbo-16k-0613',
     temperature: 0.3,
   });
 

@@ -5,10 +5,12 @@ import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
 const GenerateTexts: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
+  const [topicUser, setTopicUser] = useState("");
   const [error, setError] = useState("");
   const textRef = useRef<HTMLDivElement>(null);
 
-  const handleGenerateText = async () => {
+  const handleGenerateText = async (e:any ) => {
+    e.preventDefault();
     setLoading(true);
     setText("");
     setError("");
@@ -19,7 +21,7 @@ const GenerateTexts: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: "World War I" }),
+        body: JSON.stringify({ prompt: topicUser || "First Revolution United Kingdom" }),
       });
 
       const reader = response.body?.getReader();
@@ -72,22 +74,31 @@ const GenerateTexts: React.FC = () => {
   };
 
   const components = {
-    p: renderParagraph
+    p: renderParagraph,
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <button
-        onClick={handleGenerateText}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
-        disabled={loading}
-      >
-        {loading ? "Generating..." : "Generate Text"}
-      </button>
+    <div className=" mx-auto p-4">
+      <form className="flex" onSubmit={handleGenerateText}>
+        <input
+          type="text"
+          value={topicUser}
+          onChange={(e) => setTopicUser(e.target.value)}
+          placeholder="Elige un tema del texto que IAtin te generará..."
+          className="px-4 py-2 flex-1 mr-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+        />
+        <button
+          type="submit"
+          className="px-4 py-2 w-1/6 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
+          disabled={loading}
+        >
+          {loading ? "Generating..." : "Generate Text"}
+        </button>
+      </form>
       {error && <div className="mt-4 text-red-500">{error}</div>}
       <div
         ref={textRef}
-        className="mt-4 p-4 border rounded h-64 overflow-y-auto"
+        className="mt-4 p-4 border rounded h-auto max-h-[680px] h-m overflow-y-scroll"
       >
         <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
           {text}

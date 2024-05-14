@@ -3,19 +3,20 @@ import { GetServerSideProps } from "next";
 import { verifyToken } from "../utils/auth";
 import { getCookie } from "../utils/cookies";
 import  GenerateTexts  from "../components/exams/GenerateTexts";
+import DashboardLayout from "@/components/layouts/DashBoardLayout";
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
+
+    <DashboardLayout>
+      <div className="bg-gray-900 p-4 w-full h-full">
         <h2 className="text-2xl font-bold mb-6 text-center text-white">
-          Dashboard
+          Generate Lectures
         </h2>
-        <p className="text-center text-white">Welcome to your dashboard!</p>
         <GenerateTexts />
 
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
