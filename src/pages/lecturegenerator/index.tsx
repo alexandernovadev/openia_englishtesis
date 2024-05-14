@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-
+import { useRouter } from "next/router";
 import DashboardLayout from "@/components/layouts/DashBoardLayout";
 import { IoIosSave } from "react-icons/io";
 import { useState, useEffect } from "react";
@@ -15,6 +15,8 @@ const LectureGenerator = () => {
   const [content, setContent] = useState("");
   const [topic, setTopicUserDB] = useState("");
   const [generatedText, setGeneratedText] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setContent(generatedText);
@@ -30,13 +32,25 @@ const LectureGenerator = () => {
       });
 
       console.log("Lecture saved successfully", response.data);
+      setShowConfetti(true); // Show confetti
     } catch (error) {
       console.error("Error saving the lecture", error);
     }
   };
 
+  useEffect(() => {
+    if (showConfetti) {
+      const timer = setTimeout(() => {
+        setShowConfetti(false);
+        router.push('/lectures');
+      }, 1300); 
+      return () => clearTimeout(timer);
+    }
+  }, [showConfetti, router]);
+
   return (
     <DashboardLayout>
+      {showConfetti && <ConfettiExplosion />}
       <div className="bg-gray-900 p-4 w-full h-full">
         <section className="flex justify-between items-center">
           <h2 className="text-2xl font-bold mb-6 mx-5 text-center text-white">
