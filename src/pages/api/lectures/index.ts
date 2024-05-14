@@ -10,12 +10,13 @@ const lecturesHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "POST":
       try {
-        const { lectureID, content, level, topic } = req.body;
+        const { lectureID, content, level, topic,img } = req.body;
         const newLecture = new LectureModel({
           lectureID,
           content,
           level,
           topic,
+          img
         });
         await newLecture.save();
         res.status(201).json(newLecture);

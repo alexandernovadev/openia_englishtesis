@@ -6,4 +6,5 @@ export interface Lecture {
   topic: string;
   createdAt?: Date;
   updatedAt?: Date;
+  img?: string;
 }

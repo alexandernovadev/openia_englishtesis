@@ -57,13 +57,24 @@ const LectureList = () => {
                 onClick={() => handleLectureClick(lecture._id)}
               >
                 <div className="flex-shrink-0">
-                  <div className="h-12 w-12 bg-gray-500 rounded-full">
-                    <img
-                      src={`https://api.multiavatar.com/${lecture.lectureID}`}
-                      alt="avatar"
-                      width={48}
-                      height={48}
-                    />
+                  <div className="h-12 w-12 bg-gray-500 rounded-full overflow-hidden">
+                    {lecture.img ? (
+                      <Image
+                        src={`data:image/png;base64,${lecture.img}`}
+                        alt="Generated"
+                        width={48}
+                        height={48}
+                        className="object-cover w-full h-full"
+                      />
+                    ) : (
+                      <Image
+                        src={`https://api.multiavatar.com/${lecture.lectureID}`}
+                        alt="avatar"
+                        width={48}
+                        height={48}
+                        className="object-cover w-full h-full"
+                      />
+                    )}
                   </div>
                 </div>
                 <div>

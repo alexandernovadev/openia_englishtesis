@@ -7,7 +7,7 @@ import axios from "axios";
 import { getCookie } from "@/utils/cookies";
 import { verifyToken } from "@/utils/auth";
 import GenerateTexts from "@/components/exams/GenerateTexts";
-import ConfettiExplosion from 'react-confetti-explosion';
+import ConfettiExplosion from "react-confetti-explosion";
 
 const LectureGenerator = () => {
   const [level, setLevel] = useState("A1");
@@ -16,6 +16,7 @@ const LectureGenerator = () => {
   const [topic, setTopicUserDB] = useState("");
   const [generatedText, setGeneratedText] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -24,17 +25,26 @@ const LectureGenerator = () => {
 
   const handleSave = async () => {
     try {
-      const response = await axios.post("/api/lectures", {
+      // Generar imagen
+      const imgResponse = await axios.post("/api/lectures/imagenarator", {
+        prompt: topic,
+      });
+      const img = imgResponse.data.image;
+      console.log("Generated image:", img);
+
+      // Guardar conferencia
+      const lectureResponse = await axios.post("/api/lectures", {
         lectureID: new Date().getTime().toString(), // Generar un ID único
         content,
         level,
-        topic: "Generated Topic", // Puedes ajustar esto según sea necesario
+        topic,
+        img,
       });
 
-      console.log("Lecture saved successfully", response.data);
+      console.log("Lecture saved successfully", lectureResponse.data);
       setShowConfetti(true); // Show confetti
     } catch (error) {
-      console.error("Error saving the lecture", error);
+      console.error("Error during save process:", error);
     }
   };
 
@@ -42,8 +52,8 @@ const LectureGenerator = () => {
     if (showConfetti) {
       const timer = setTimeout(() => {
         setShowConfetti(false);
-        router.push('/lectures');
-      }, 1300); 
+        router.push("/lectures");
+      }, 1300);
       return () => clearTimeout(timer);
     }
   }, [showConfetti, router]);
@@ -79,7 +89,7 @@ const LectureGenerator = () => {
 
             <section className="flex flex-col items-center">
               <h6 title="paragraphs" className="cursor-pointer">
-                Levels{" "}
+                Paragraphs{" "}
               </h6>
               <select
                 name="paragraphs"

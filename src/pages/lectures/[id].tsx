@@ -81,7 +81,17 @@ const LectureDetail = () => {
                   {new Date(lecture.createdAt!).toLocaleDateString()}
                 </span>
               </div>
+                  {/* Image */}
+            {lecture.img && (
+              <img
+              src={`data:image/png;base64,${lecture.img}`}
+                alt="Lecture Image"
+                className=" object-cover rounded-full my-2"
+                width={200}
+              />
+            )}
             </section>
+        
             <h1 className="text-3xl font-bold mb-4">{title}</h1>
             <div className="prose prose-invert">
               <ReactMarkdown>{remainingContent}</ReactMarkdown>

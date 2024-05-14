@@ -7,6 +7,7 @@ export interface Lecture extends Document {
   topic: string;
   createdAt?: Date;
   updatedAt?: Date;
+  img?: string;
 }
 
 const LectureSchema: Schema = new Schema({
@@ -14,6 +15,7 @@ const LectureSchema: Schema = new Schema({
   content: { type: String, required: true },
   level: { type: String, required: true },
   topic: { type: String, required: true },
+  img: { type: String },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
