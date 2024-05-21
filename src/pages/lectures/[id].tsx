@@ -119,7 +119,7 @@ const LectureDetail = () => {
               <h1 className="text-6xl font-bold mb-4">{title}</h1>
             </div>
 
-            <div className="prose prose-invert">
+            <div className="prose prose-invert overflow-scroll h-[400px]">
               <ReactMarkdown>{remainingContent}</ReactMarkdown>
             </div>
           </>

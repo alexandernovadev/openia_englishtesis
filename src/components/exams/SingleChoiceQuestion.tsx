@@ -45,10 +45,12 @@ const SingleChoiceQuestion = ({
               className="mr-2"
             />
             {option}
-            {isGraded && option === selectedAnswer && <span className="mx-4 text-sm font-bold text-yellow-600">TU SELECCION</span>}
-
+            {isGraded && option === selectedAnswer && (
+              <span className="mx-4 text-xs underline font-bold text-yellow-600">
+                TU SELECCION
+              </span>
+            )}
           </label>
-          
         ))}
       </div>
     </div>

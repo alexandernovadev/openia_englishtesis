@@ -2,7 +2,11 @@ import DashboardLayout from "@/components/layouts/DashBoardLayout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { IoArrowBackCircle, IoCheckmarkCircle, IoCloseCircle } from "react-icons/io5";
+import {
+  IoArrowBackCircle,
+  IoCheckmarkCircle,
+  IoCloseCircle,
+} from "react-icons/io5";
 import { Exam } from "@/interfaces/Exam";
 import SingleChoiceQuestion from "@/components/exams/SingleChoiceQuestion";
 import MultipleChoiceQuestion from "@/components/exams/MultipleQuestion";
@@ -22,7 +26,6 @@ const ExamDetail = () => {
           const response = await fetch(`/api/exams/${id}`);
           const data = await response.json();
           setExamData(data);
-          console.log(`${JSON.stringify(data, null, 2)}`);
         } catch (error) {
           console.error("Failed to fetch exam data:", error);
         } finally {
@@ -46,15 +49,30 @@ const ExamDetail = () => {
     setIsGraded(true);
   };
 
+  const arraysEqual = (a: any[], b: any[]) => {
+    if (a.length !== b.length) return false;
+    const sortedA = [...a].sort();
+    const sortedB = [...b].sort();
+    for (let i = 0; i < sortedA.length; i++) {
+      if (sortedA[i] !== sortedB[i]) return false;
+    }
+    return true;
+  };
+
   const RenderQuestion = (question: any) => {
-    const userAnswer = answers[question._id];
+    const userAnswer = answers[question._id] || [];
     let isCorrect = false;
 
     if (question.type === "UNIQUE") {
       isCorrect = userAnswer === question.correctAnswer;
     } else if (question.type === "MULTIPLE") {
-      isCorrect = Array.isArray(userAnswer) && Array.isArray(question.correctAnswer) && 
-                  userAnswer.sort().toString() === question.correctAnswer.sort().toString();
+      isCorrect = arraysEqual(
+        userAnswer,
+        question.correctAnswer.split(",").map((x: string) => x.trim())
+      );
+
+      console.log("\n");
+      console.log(isCorrect);
     }
 
     return (
