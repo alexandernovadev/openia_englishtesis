@@ -3,16 +3,23 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/dbmongoclient";
 import LectureModel from "@/dbmongoclient/models/lecture";
+import mongoose from "mongoose";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await clientPromise; // Asegúrate de que la conexión a la base de datos esté establecida
 
   const { id } = req.query;
 
+  if (!mongoose.Types.ObjectId.isValid(id as string)) {
+    return res.status(400).json({ error: "Invalid ID format" });
+  }
+
+  const objectId = new mongoose.Types.ObjectId(id as string);
+
   if (req.method === "GET") {
     // Obtener una lección por ID
     try {
-      const lecture = await LectureModel.findById(id);
+      const lecture = await LectureModel.findById(objectId);
 
       if (!lecture) {
         return res.status(404).json({ error: "Lecture not found" });
@@ -33,7 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     try {
       const updatedLecture = await LectureModel.findByIdAndUpdate(
-        id,
+        objectId,
         { content, level, topic, updatedAt: new Date() },
         { new: true }
       );

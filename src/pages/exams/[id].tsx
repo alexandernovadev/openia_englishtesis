@@ -2,24 +2,18 @@ import DashboardLayout from "@/components/layouts/DashBoardLayout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { IoArrowBackCircle } from "react-icons/io5";
+import { IoArrowBackCircle, IoCheckmarkCircle, IoCloseCircle } from "react-icons/io5";
 import { Exam } from "@/interfaces/Exam";
 import SingleChoiceQuestion from "@/components/exams/SingleChoiceQuestion";
 import MultipleChoiceQuestion from "@/components/exams/MultipleQuestion";
-
-interface Question {
-  _id: string;
-  title: string;
-  type: string;
-  options: string[];
-  correctAnswer: string;
-}
 
 const ExamDetail = () => {
   const router = useRouter();
   const { id } = router.query;
   const [examData, setExamData] = useState<Exam>();
   const [loading, setLoading] = useState(true);
+  const [answers, setAnswers] = useState<{ [key: string]: any }>({});
+  const [isGraded, setIsGraded] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -41,30 +35,60 @@ const ExamDetail = () => {
   }, [id]);
 
   const handleAnswerChange = (questionId: string, value: any) => {
-    console.log(`Answer changed for question ${questionId}:`, value);
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [questionId]: value,
+    }));
+  };
+
+  const handleCalificate = () => {
+    console.log("User's answers:", answers);
+    setIsGraded(true);
   };
 
   const RenderQuestion = (question: any) => {
-    switch (question.type) {
-      case "UNIQUE":
-        return (
-          <SingleChoiceQuestion
-            key={question._id}
-            question={question}
-            onChange={() => {}}
-          />
-        );
-      case "MULTIPLE":
-        return (
-          <MultipleChoiceQuestion
-            key={question._id}
-            question={question}
-            onChange={() => {}}
-          />
-        );
-      default:
-        return null;
+    const userAnswer = answers[question._id];
+    let isCorrect = false;
+
+    if (question.type === "UNIQUE") {
+      isCorrect = userAnswer === question.correctAnswer;
+    } else if (question.type === "MULTIPLE") {
+      isCorrect = Array.isArray(userAnswer) && Array.isArray(question.correctAnswer) && 
+                  userAnswer.sort().toString() === question.correctAnswer.sort().toString();
     }
+
+    return (
+      <div key={question._id} className="relative">
+        {isGraded && (
+          <div className="absolute top-0 right-0 m-2">
+            {isCorrect ? (
+              <IoCheckmarkCircle className="text-green-500" size={24} />
+            ) : (
+              <IoCloseCircle className="text-red-500" size={24} />
+            )}
+          </div>
+        )}
+        {question.type === "UNIQUE" ? (
+          <SingleChoiceQuestion
+            question={question}
+            onChange={(value) => handleAnswerChange(question._id, value)}
+            selectedAnswer={userAnswer}
+            correctAnswer={question.correctAnswer}
+            isGraded={isGraded}
+            disabled={isGraded}
+          />
+        ) : (
+          <MultipleChoiceQuestion
+            question={question}
+            onChange={(value) => handleAnswerChange(question._id, value)}
+            selectedAnswer={userAnswer}
+            correctAnswer={question.correctAnswer}
+            isGraded={isGraded}
+            disabled={isGraded}
+          />
+        )}
+      </div>
+    );
   };
 
   if (loading) {
@@ -100,9 +124,14 @@ const ExamDetail = () => {
         <section className="h-[500px] overflow-auto">
           {examData?.questions.map((q) => RenderQuestion(q))}
         </section>
-        <button className="text-xl p-1 my-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          Calificate
-        </button>
+        {!isGraded && (
+          <button
+            onClick={handleCalificate}
+            className="text-xl p-1 my-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Calificate
+          </button>
+        )}
       </div>
     </DashboardLayout>
   );
