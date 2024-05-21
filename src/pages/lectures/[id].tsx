@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardLayout from "@/components/layouts/DashBoardLayout";
-import ReactMarkdown from "react-markdown";
 import { IoArrowBackCircle } from "react-icons/io5";
 import Link from "next/link";
 import { Lecture } from "@/interfaces/lecture";
@@ -32,6 +31,55 @@ const LectureDetail = () => {
       fetchLecture();
     }
   }, [id]);
+
+  const handleWordClick = (word: string) => {
+    speakWord(word);
+  };
+
+  const speakWord = (word: string) => {
+    const utterance = new SpeechSynthesisUtterance(word);
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const renderMarkdownWithClickableWords = (content: string) => {
+    return content.split("\n").map((line, lineIndex) => {
+      // Determine the appropriate tag based on the Markdown syntax
+      let tag = "p";
+      if (line.startsWith("# ")) {
+        tag = "h1";
+        line = line.slice(2);
+      } else if (line.startsWith("## ")) {
+        tag = "h2";
+        line = line.slice(3);
+      } else if (line.startsWith("### ")) {
+        tag = "h3";
+        line = line.slice(4);
+      } else if (line.startsWith("#### ")) {
+        tag = "h4";
+        line = line.slice(5);
+      } else if (line.startsWith("##### ")) {
+        tag = "h5";
+        line = line.slice(6);
+      } else if (line.startsWith("###### ")) {
+        tag = "h6";
+        line = line.slice(7);
+      }
+
+      return React.createElement(
+        tag,
+        { key: lineIndex },
+        line.split(" ").map((word, wordIndex) => (
+          <span
+            key={`${lineIndex}-${wordIndex}`}
+            className="cursor-pointer hover:underline"
+            onClick={() => handleWordClick(word)}
+          >
+            {word}{" "}
+          </span>
+        ))
+      );
+    });
+  };
 
   if (loading) {
     return (
@@ -91,7 +139,6 @@ const LectureDetail = () => {
                 </span>
               </div>
               <div>
-                {/*create at and */}
                 <span className="text-gray-400">
                   Created at:{" "}
                   {new Date(lecture.createdAt!).toLocaleDateString()}
@@ -103,24 +150,26 @@ const LectureDetail = () => {
                 <img
                   src={`data:image/png;base64,${lecture.img}`}
                   alt="Lecture Image"
-                  className=" object-cover rounded-full my-2 "
+                  className="object-cover rounded-full my-2"
                   width={180}
                 />
               ) : (
                 <Image
                   src={imagedDefault}
                   alt="Lecture Image"
-                  className=" object-cover rounded-full my-2 "
+                  className="object-cover rounded-full my-2"
                   width={180}
                   height={200}
                 />
               )}
 
-              <h1 className="text-6xl font-bold mb-4">{title}</h1>
+              <h1 className="text-6xl font-bold mb-4">
+                {renderMarkdownWithClickableWords("#" + title)}
+              </h1>
             </div>
 
             <div className="prose prose-invert overflow-scroll h-[400px]">
-              <ReactMarkdown>{remainingContent}</ReactMarkdown>
+              {renderMarkdownWithClickableWords(remainingContent)}
             </div>
           </>
         ) : (
