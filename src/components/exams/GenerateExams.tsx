@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
 
 interface GenerateTextsProps {
   level?: string;
+  lecture?: string;
   ammountQuestions?: number;
   sendExamJSON?: (text: Object) => void;
 }
@@ -13,13 +14,14 @@ const GenerateExams = ({
   level = "B2",
   ammountQuestions = 10,
   sendExamJSON,
+  lecture,
 }: GenerateTextsProps) => {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
 
   // This one woulb be the content of lecture
   const [topicUser, setTopicUser] = useState("");
-  
+
   const [error, setError] = useState("");
   const textRef = useRef<HTMLDivElement>(null);
 
@@ -37,8 +39,7 @@ const GenerateExams = ({
         },
         body: JSON.stringify({
           prompt:
-            topicUser ||
-            `# The Beautiful Thing I've Got## A Lesson in Appreciation Once upon a time, there was a young girl named Lily. She had a beautiful doll that she loved very much. It was a gift from her grandmother and was very special to her. She took great care of it, always keeping it clean and safe. One day, a friend asked if she could borrow the doll. Lily was hesitant. She didn't want to risk losing or damaging this beautiful thing she had. She kindly refused, explaining how important the doll was to her. From that day on, Lily learned the importance of appreciating and protecting the things we love.`,
+          lecture ||"Examen tipo toefl sobre gramatica B2, ",
           level,
           ammountQuestions,
         }),
@@ -64,16 +65,15 @@ const GenerateExams = ({
       setError("Failed to fetch the generated text.");
     } finally {
       setLoading(false);
-
     }
   };
 
   useEffect(() => {
-    if (text.length >0 && !loading) {
-      convertRtaToJSON()
+    if (text.length > 0 && !loading) {
+      convertRtaToJSON();
     }
-  }, [text, loading])
-  
+  }, [text, loading]);
+
   const convertRtaToJSON = () => {
     // Eliminar las partes "```json" y "```"
     let texDt = text
@@ -89,8 +89,8 @@ const GenerateExams = ({
   return (
     <div className="mx-auto p-4">
       <form className="flex" onSubmit={handleGenerateText}>
-        <h3 className="mx-4">
-          Lecture (Send my moon to the sun and dream about it)
+        <h3 className="mx-4 cursor-pointer" title={lecture}>
+          {lecture?.split('##')[0]}
         </h3>
 
         <button
@@ -98,7 +98,7 @@ const GenerateExams = ({
           className="px-4 py-2 w-1/6 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
           disabled={loading}
         >
-          {loading ? "Generating..." : "Generate Text"}
+          {loading ? "Generating..." : "Generate Exam"}
         </button>
       </form>
       {error && <div className="mt-4 text-red-500">{error}</div>}

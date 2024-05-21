@@ -2,7 +2,6 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 
 // Interface for Question
 export interface Question extends Document {
-  _id: string;
   title: string;
   type: "MULTIPLE" | "UNIQUE" | "OPENTEXT";
   options?: string[];
@@ -24,7 +23,6 @@ export interface Exam extends Document {
 
 // Schema for Question
 const QuestionSchema: Schema = new Schema({
-  _id: { type: String, required: true },
   title: { type: String, required: true },
   type: {
     type: String,
@@ -41,7 +39,7 @@ const ExamSchema: Schema = new Schema({
   lectureID: { type: String, required: true },
   title: { type: String, required: true },
   difficulty: {
-    type: String,
+    type: String, 
     required: true,
     enum: ["HARD", "MEDIUM", "EASY"],
   },
@@ -57,10 +55,20 @@ const ExamSchema: Schema = new Schema({
 });
 
 // Models
-const QuestionModel: Model<Question> = mongoose.model<Question>(
-  "Question",
-  QuestionSchema
-);
-const ExamModel: Model<Exam> = mongoose.model<Exam>("Exam", ExamSchema);
+let QuestionModel: Model<Question>;
+
+try {
+  QuestionModel = mongoose.model<Question>("Question");
+} catch (error) {
+  QuestionModel = mongoose.model<Question>("Question", QuestionSchema);
+}
+
+let ExamModel: Model<Exam>;
+
+try {
+  ExamModel = mongoose.model<Exam>("Exam");
+} catch (error) {
+  ExamModel = mongoose.model<Exam>("Exam", ExamSchema);
+}
 
 export { QuestionModel, ExamModel };

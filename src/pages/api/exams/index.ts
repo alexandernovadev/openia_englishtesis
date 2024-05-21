@@ -22,6 +22,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         await newExam.save();
         res.status(201).json(newExam);
       } catch (error) {
+        console.log(error);
+        
         res.status(400).json({ error: "Failed to create exam" });
       }
       break;

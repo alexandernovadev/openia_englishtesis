@@ -65,6 +65,11 @@ const LectureList = () => {
     router.push(`/lectures/${lectureID}`); // Navigate to /lectures/ID
   };
 
+  const handleExamGenerateClick = (lectureID: string) => {
+    router.push(`/examsgenerator/${lectureID}`); // Navigate to /lectures/ID
+  };
+
+  
   return (
     <DashboardLayout>
       <div className="bg-gray-900 p-5 h-screen">
@@ -106,7 +111,7 @@ const LectureList = () => {
 
                   <div className="flex flex-row space-x-2 mt-2">
                     <button
-                      onClick={() => handleLectureClick(lecture._id)}
+                      onClick={() => handleExamGenerateClick(lecture.content)}
                       className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
                       Generate Exam

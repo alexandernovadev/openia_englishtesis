@@ -9,48 +9,64 @@ import { verifyToken } from "@/utils/auth";
 import GenerateTexts from "@/components/exams/GenerateTexts";
 import ConfettiExplosion from "react-confetti-explosion";
 import GenerateExams from "@/components/exams/GenerateExams";
+import { Exam } from "@/interfaces/Exam";
 
 const ExamGenerator = () => {
   const [level, setLevel] = useState("A1");
+  const [difficulty, setDifficulty] = useState<Exam["difficulty"]>("HARD");
   const [ammountQuestions, setAmmountQuestions] = useState(5);
-  const [examGPT, setExamGPT] = useState({});
-  const [topic, setTopicUserDB] = useState("");
-  const [generatedText, setGeneratedText] = useState("");
+  const [examGPT, setExamGPT] = useState<Exam>();
+  const [titleLecture, setTitleLecture] = useState("");
+  const [generatedText, setGeneratedText] = useState<Object>();
   const [showConfetti, setShowConfetti] = useState(false);
   const [generatedImage, setGeneratedImage] = useState("");
-
   const router = useRouter();
+  const { asPath } = router;
 
   useEffect(() => {
+    // @ts-ignore
     setExamGPT(generatedText);
   }, [generatedText]);
 
-  const formatToSendToMongo =  (examByGpt: Object) => {
+  useEffect(() => {
+    const parseLectureID = (path: any) => {
+      const hashIndex = path.indexOf("#");
+      if (hashIndex !== -1) {
+        return decodeURIComponent(path.slice(hashIndex + 1));
+      }
+      return "";
+    };
+
+    const parsedLectureID = parseLectureID(asPath);
+    console.log("Parsed Lecture ID:", parsedLectureID);
+    setTitleLecture(parsedLectureID);
+  }, [asPath]);
+
+  const formatToSendToMongo = (examByGpt: Object) => {
     console.log("x ", examByGpt);
 
-    
-    setExamGPT(examByGpt);
-  }
+    const dataExam = {
+      ...examByGpt,
+      difficulty,
+      level: level as Exam["level"],
+      score: 100,
+      lectureID: "y8327e89273",
+    } as Exam;
 
+    setExamGPT(dataExam);
+  };
 
   const handleSave = async () => {
+    console.log(examGPT);
 
-    // try {
-
-    //   // Guardar conferencia
-    //   const lectureResponse = await axios.post("/api/save-exam", {
-    //     lectureID: new Date().getTime().toString(), // Generar un ID único
-    //     content,
-    //     level,
-    //     topic,
-    //     img: generatedImage,
-    //   });
-
-    //   console.log("Lecture saved successfully", lectureResponse.data);
-    //   setShowConfetti(true); // Show confetti
-    // } catch (error) {
-    //   console.error("Error during save process:", error);
-    // }
+    try {
+      // Guardar conferencia
+      const lectureResponse = await axios.post("/api/exams", examGPT);
+      console.log("Exam saved successfully", lectureResponse.data);
+      setShowConfetti(true); // Show confetti
+    } catch (error) {
+      console.error("Exam during save process:", error);
+    }
   };
 
   useEffect(() => {
@@ -126,26 +142,43 @@ const ExamGenerator = () => {
               </select>
             </section>
 
-            {examGPT && (
-              <section className="flex flex-col items-center">
-                <h4 title="Save" className="cursor-pointer">
-                  &nbsp;
-                </h4>
-                <button
-                  onClick={formatToSendToMongo}
-                  className="text-4xl bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <IoIosSave />
-                </button>
-              </section>
-            )}
+            <section className="flex flex-col items-center">
+              <h6 title="difficulty" className="cursor-pointer">
+                Difficulty{" "}
+              </h6>
+              <select
+                name="difficulty"
+                value={difficulty}
+                onChange={(e) =>
+                  setDifficulty(e.target.value as Exam["difficulty"])
+                }
+                className="bg-gray-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value={"HARD"}>Hard</option>
+                <option value={"EASY"}>Easy</option>
+                <option value={"MEDIUM"}>Middle</option>
+              </select>
+            </section>
+
+            <section className="flex flex-col items-center">
+              <h4 title="Save" className="cursor-pointer">
+                &nbsp;
+              </h4>
+              <button
+                onClick={handleSave}
+                className="text-4xl bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <IoIosSave />
+              </button>
+            </section>
           </div>
         </section>
 
         <GenerateExams
           level={level}
+          lecture={titleLecture}
           ammountQuestions={ammountQuestions}
-          sendExamJSON={handleSave}
+          sendExamJSON={formatToSendToMongo}
         />
       </div>
     </DashboardLayout>
