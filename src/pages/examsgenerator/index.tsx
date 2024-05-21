@@ -21,46 +21,34 @@ const ExamGenerator = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [generatedImage, setGeneratedImage] = useState("");
   const router = useRouter();
-  const { asPath } = router;
+  const { lectureID, lectureContent } = router.query;
+
+  useEffect(() => {
+    if (lectureID) {
+      console.log("Lecture ID:", lectureID);
+      setTitleLecture(decodeURIComponent(lectureContent as string));
+    }
+  }, [lectureID, lectureContent]);
 
   useEffect(() => {
     // @ts-ignore
     setExamGPT(generatedText);
   }, [generatedText]);
 
-  useEffect(() => {
-    const parseLectureID = (path: any) => {
-      const hashIndex = path.indexOf("#");
-      if (hashIndex !== -1) {
-        return decodeURIComponent(path.slice(hashIndex + 1));
-      }
-      return "";
-    };
-
-    const parsedLectureID = parseLectureID(asPath);
-    console.log("Parsed Lecture ID:", parsedLectureID);
-    setTitleLecture(parsedLectureID);
-  }, [asPath]);
-
   const formatToSendToMongo = (examByGpt: Object) => {
-    console.log("x ", examByGpt);
-
     const dataExam = {
       ...examByGpt,
       difficulty,
       level: level as Exam["level"],
       score: 100,
-      lectureID: "y8327e89273",
+      lectureID,
     } as Exam;
 
     setExamGPT(dataExam);
   };
 
   const handleSave = async () => {
-    console.log(examGPT);
-
     try {
-      // Guardar conferencia
       const lectureResponse = await axios.post("/api/exams", examGPT);
       console.log("Exam saved successfully", lectureResponse.data);
       setShowConfetti(true); // Show confetti
@@ -90,11 +78,11 @@ const ExamGenerator = () => {
             </h2>
 
             {generatedImage && (
-              <div className="flex justify-center ">
+              <div className="flex justify-center">
                 <img
                   src={`data:image/png;base64,${generatedImage}`}
                   alt="Lecture Image"
-                  className=" object-cover rounded-full"
+                  className="object-cover rounded-full"
                   width={64}
                 />
               </div>
@@ -104,7 +92,7 @@ const ExamGenerator = () => {
           <div className="flex gap-4 justify-center items-center">
             <section className="flex flex-col items-center">
               <h6 title="Levels" className="cursor-pointer">
-                Levels{" "}
+                Levels
               </h6>
               <select
                 name="levels"
@@ -123,7 +111,7 @@ const ExamGenerator = () => {
 
             <section className="flex flex-col items-center">
               <h6 title="ammountQuestions" className="cursor-pointer">
-                # Questions{" "}
+                # Questions
               </h6>
               <select
                 name="ammountQuestions"
@@ -144,7 +132,7 @@ const ExamGenerator = () => {
 
             <section className="flex flex-col items-center">
               <h6 title="difficulty" className="cursor-pointer">
-                Difficulty{" "}
+                Difficulty
               </h6>
               <select
                 name="difficulty"

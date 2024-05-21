@@ -36,7 +36,7 @@ const QuestionSchema: Schema = new Schema({
 
 // Schema for Exam
 const ExamSchema: Schema = new Schema({
-  lectureID: { type: String, required: true },
+  lectureID: { type: Schema.Types.ObjectId, ref: "Lecture", required: true },
   title: { type: String, required: true },
   difficulty: {
     type: String, 
