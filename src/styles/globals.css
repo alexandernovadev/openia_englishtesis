@@ -30,11 +30,11 @@ body {
 
 
 h1 {
-  @apply text-4xl font-bold text-green-600;
+  @apply text-6xl font-bold text-green-600;
 }
 
 h2 {
-  @apply text-2xl font-semibold text-blue-600;
+  @apply text-5xl font-semibold text-blue-600;
 }
 
 h3 {

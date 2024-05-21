@@ -6,6 +6,8 @@ import ReactMarkdown from "react-markdown";
 import { IoArrowBackCircle } from "react-icons/io5";
 import Link from "next/link";
 import { Lecture } from "@/interfaces/lecture";
+import imagedDefault from "../../../public/default.webp";
+import Image from "next/image";
 
 const LectureDetail = () => {
   const router = useRouter();
@@ -81,18 +83,28 @@ const LectureDetail = () => {
                   {new Date(lecture.createdAt!).toLocaleDateString()}
                 </span>
               </div>
-                  {/* Image */}
-            {lecture.img && (
-              <img
-              src={`data:image/png;base64,${lecture.img}`}
-                alt="Lecture Image"
-                className=" object-cover rounded-full my-2"
-                width={200}
-              />
-            )}
             </section>
-        
-            <h1 className="text-3xl font-bold mb-4">{title}</h1>
+            <div className="flex flex-row justify-center items-center gap-3">
+              {lecture.img ? (
+                <img
+                  src={`data:image/png;base64,${lecture.img}`}
+                  alt="Lecture Image"
+                  className=" object-cover rounded-full my-2 "
+                  width={180}
+                />
+              ) : (
+                <Image
+                  src={imagedDefault}
+                  alt="Lecture Image"
+                  className=" object-cover rounded-full my-2 "
+                  width={180}
+                  height={200}
+                />
+              )}
+
+              <h1 className="text-6xl font-bold mb-4">{title}</h1>
+            </div>
+
             <div className="prose prose-invert">
               <ReactMarkdown>{remainingContent}</ReactMarkdown>
             </div>

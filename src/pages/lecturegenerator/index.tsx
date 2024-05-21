@@ -16,6 +16,7 @@ const LectureGenerator = () => {
   const [topic, setTopicUserDB] = useState("");
   const [generatedText, setGeneratedText] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState("");
 
   const router = useRouter();
 
@@ -25,12 +26,6 @@ const LectureGenerator = () => {
 
   const handleSave = async () => {
     try {
-      // Generar imagen
-      const imgResponse = await axios.post("/api/lectures/imagenarator", {
-        prompt: topic,
-      });
-      const img = imgResponse.data.image;
-      console.log("Generated image:", img);
 
       // Guardar conferencia
       const lectureResponse = await axios.post("/api/lectures", {
@@ -38,7 +33,7 @@ const LectureGenerator = () => {
         content,
         level,
         topic,
-        img,
+        img: generatedImage,
       });
 
       console.log("Lecture saved successfully", lectureResponse.data);
@@ -63,9 +58,22 @@ const LectureGenerator = () => {
       {showConfetti && <ConfettiExplosion />}
       <div className="bg-gray-900 p-4 w-full h-full">
         <section className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold mb-6 mx-5 text-center text-white">
-            Lectures <br /> Generator
-          </h2>
+          <div className="flex justify-center items-center">
+            <h2 className="text-2xl font-bold mx-5 text-center text-white">
+              Lectures <br /> Generator
+            </h2>
+
+            {generatedImage && (
+              <div className="flex justify-center ">
+                <img
+                  src={`data:image/png;base64,${generatedImage}`}
+                  alt="Lecture Image"
+                  className=" object-cover rounded-full"
+                  width={64}
+                />
+              </div>
+            )}
+          </div>
 
           <div className="flex gap-4 justify-center items-center">
             <section className="flex flex-col items-center">
@@ -103,17 +111,19 @@ const LectureGenerator = () => {
               </select>
             </section>
 
-            <section className="flex flex-col items-center">
-              <h4 title="Save" className="cursor-pointer">
-                &nbsp;
-              </h4>
-              <button
-                onClick={handleSave}
-                className="text-4xl bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <IoIosSave />
-              </button>
-            </section>
+            {content && (
+              <section className="flex flex-col items-center">
+                <h4 title="Save" className="cursor-pointer">
+                  &nbsp;
+                </h4>
+                <button
+                  onClick={handleSave}
+                  className="text-4xl bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <IoIosSave />
+                </button>
+              </section>
+            )}
           </div>
         </section>
 
@@ -122,6 +132,7 @@ const LectureGenerator = () => {
           paragraphs={paragraphs}
           setTopicUserDB={setTopicUserDB}
           onTextUpdate={setGeneratedText}
+          setGeneratedImage={setGeneratedImage}
         />
       </div>
     </DashboardLayout>

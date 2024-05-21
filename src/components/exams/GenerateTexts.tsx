@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
@@ -5,8 +6,9 @@ import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
 interface GenerateTextsProps {
   level?: string;
   paragraphs?: number;
-  setTopicUserDB?: (text: string) => void;
+  setTopicUserDB?: (text: string) => void; 
   onTextUpdate?: (text: string) => void;
+  setGeneratedImage?: (text: string) => void;
 }
 
 const GenerateTexts = ({
@@ -14,6 +16,7 @@ const GenerateTexts = ({
   setTopicUserDB,
   paragraphs = 1,
   onTextUpdate,
+  setGeneratedImage
 }: GenerateTextsProps) => {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
@@ -55,6 +58,15 @@ const GenerateTexts = ({
         if (textRef.current) {
           textRef.current.scrollTop = textRef.current.scrollHeight;
         }
+      }
+
+      if (text.length > 200 && text.length !== 0) {
+        const imgResponse = await axios.post("/api/lectures/imagenarator", {
+          prompt: topicUser,
+        });
+        const img = imgResponse.data.image;
+        console.log("Generated image:", img);
+        setGeneratedImage && setGeneratedImage(img);
       }
     } catch (err) {
       setError("Failed to fetch the generated text.");
@@ -103,7 +115,7 @@ const GenerateTexts = ({
   };
 
   return (
-    <div className=" mx-auto p-4">
+    <div className="mx-auto p-4">
       <form className="flex" onSubmit={handleGenerateText}>
         <input
           type="text"

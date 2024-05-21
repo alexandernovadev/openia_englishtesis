@@ -3,6 +3,7 @@ import axios from "axios";
 import "tailwindcss/tailwind.css";
 import DashboardLayout from "@/components/layouts/DashBoardLayout";
 import Image from "next/image";
+import imagedDefault from "../../../public/default.webp";
 import { useRouter } from "next/router";
 
 const LectureList = () => {
@@ -68,12 +69,12 @@ const LectureList = () => {
                       />
                     ) : (
                       <Image
-                        src={`https://api.multiavatar.com/${lecture.lectureID}`}
-                        alt="avatar"
-                        width={48}
-                        height={48}
-                        className="object-cover w-full h-full"
-                      />
+                      src={imagedDefault}
+                      alt="Lecture Image"
+                      className=" object-cover rounded-full my-2 "
+                      width={180}
+                      height={200}
+                    />
                     )}
                   </div>
                 </div>

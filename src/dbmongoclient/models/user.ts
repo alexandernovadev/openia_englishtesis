@@ -1,6 +1,6 @@
 // models/User.ts
 
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface User extends Document {
   userID: string;
@@ -28,6 +28,12 @@ const UserSchema: Schema = new Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-const UserModel = mongoose.model<User>("User", UserSchema);
+let UserModel: Model<User>;
+
+try {
+  UserModel = mongoose.model<User>("User");
+} catch (error) {
+  UserModel = mongoose.model<User>("User", UserSchema);
+}
 
 export default UserModel;
