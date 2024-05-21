@@ -5,22 +5,21 @@ import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
 
 interface GenerateTextsProps {
   level?: string;
-  paragraphs?: number;
-  setTopicUserDB?: (text: string) => void; 
-  onTextUpdate?: (text: string) => void;
-  setGeneratedImage?: (text: string) => void;
+  ammountQuestions?: number;
+  sendExamJSON?: (text: Object) => void;
 }
 
-const GenerateTexts = ({
+const GenerateExams = ({
   level = "B2",
-  setTopicUserDB,
-  paragraphs = 1,
-  onTextUpdate,
-  setGeneratedImage,
+  ammountQuestions = 10,
+  sendExamJSON,
 }: GenerateTextsProps) => {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
+
+  // This one woulb be the content of lecture
   const [topicUser, setTopicUser] = useState("");
+  
   const [error, setError] = useState("");
   const textRef = useRef<HTMLDivElement>(null);
 
@@ -31,15 +30,17 @@ const GenerateTexts = ({
     setError("");
 
     try {
-      const response = await fetch("/api/openia/generatetexts", {
+      const response = await fetch("/api/openia/generate-exams", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: topicUser || "First Revolution United Kingdom",
+          prompt:
+            topicUser ||
+            `# The Beautiful Thing I've Got## A Lesson in Appreciation Once upon a time, there was a young girl named Lily. She had a beautiful doll that she loved very much. It was a gift from her grandmother and was very special to her. She took great care of it, always keeping it clean and safe. One day, a friend asked if she could borrow the doll. Lily was hesitant. She didn't want to risk losing or damaging this beautiful thing she had. She kindly refused, explaining how important the doll was to her. From that day on, Lily learned the importance of appreciating and protecting the things we love.`,
           level,
-          paragraphs,
+          ammountQuestions,
         }),
       });
 
@@ -59,74 +60,39 @@ const GenerateTexts = ({
           textRef.current.scrollTop = textRef.current.scrollHeight;
         }
       }
-
-      if (text.length > 200 && text.length !== 0) {
-        const imgResponse = await axios.post("/api/lectures/imagenarator", {
-          prompt: topicUser,
-        });
-        const img = imgResponse.data.image;
-        console.log("Generated image:", img);
-        setGeneratedImage && setGeneratedImage(img);
-      }
     } catch (err) {
       setError("Failed to fetch the generated text.");
     } finally {
       setLoading(false);
+
     }
   };
 
   useEffect(() => {
-    if (onTextUpdate) {
-      onTextUpdate(text);
+    if (text.length >0 && !loading) {
+      convertRtaToJSON()
     }
-  }, [text, onTextUpdate]);
+  }, [text, loading])
+  
+  const convertRtaToJSON = () => {
+    // Eliminar las partes "```json" y "```"
+    let texDt = text
+      .replace(/```json/, "")
+      .replace(/```/, "")
+      .trim();
+    // Parsear el JSON a un objeto JavaScript
+    const parsedObject = JSON.parse(texDt);
 
-  const handleWordClick = (word: string) => {
-    console.log(word);
-  };
-
-  const renderParagraph = (props: any) => {
-    const { children } = props;
-    return (
-      <p>
-        {React.Children.map(children, (child, index) => {
-          if (typeof child === "string") {
-            const words = child.split(" ");
-            return words.map((word, wordIndex) => (
-              <React.Fragment key={wordIndex}>
-                <span
-                  onClick={() => handleWordClick(word)}
-                  className="cursor-pointer"
-                >
-                  {word}
-                </span>
-                {wordIndex < words.length - 1 ? " " : ""}
-              </React.Fragment>
-            ));
-          }
-          return child;
-        })}
-      </p>
-    );
-  };
-
-  const components = {
-    p: renderParagraph,
+    sendExamJSON && sendExamJSON(parsedObject);
   };
 
   return (
     <div className="mx-auto p-4">
       <form className="flex" onSubmit={handleGenerateText}>
-        <input
-          type="text"
-          value={topicUser}
-          onChange={(e) => {
-            setTopicUser(e.target.value);
-            setTopicUserDB && setTopicUserDB(e.target.value);
-          }}
-          placeholder="Elige un tema del texto que IAtin te generará..."
-          className="px-4 py-2 flex-1 mr-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
-        />
+        <h3 className="mx-4">
+          Lecture (Send my moon to the sun and dream about it)
+        </h3>
+
         <button
           type="submit"
           className="px-4 py-2 w-1/6 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
@@ -145,12 +111,11 @@ const GenerateTexts = ({
             No text generated yet.
           </div>
         )}
-        <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-          {text}
-        </ReactMarkdown>
+
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
       </div>
     </div>
   );
 };
 
-export default GenerateTexts;
+export default GenerateExams;

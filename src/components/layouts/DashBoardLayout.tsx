@@ -5,7 +5,7 @@ import { RxAvatar } from "react-icons/rx";
 import { GiVendingMachine } from "react-icons/gi";
 import { FaBookReader } from "react-icons/fa";
 import logo from "../../../public/images/logo.webp";
-
+import { SlDocs } from "react-icons/sl";
 interface DashboardLayoutProps {
   children: React.ReactNode;
 }
@@ -13,7 +13,7 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className="flex h-screen">
-      <div className="w-16 bg-gray-800 flex flex-col items-center pb-4 space-y-4">
+      <div className="w-16 bg-gray-800 flex flex-col items-center pb-4 space-y-4 p-2">
         <div className="text-white">
           {/*<Image
             src={logo}
@@ -37,8 +37,15 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             <FaBookReader className="text-4xl" />
           </div>
         </Link>
+        <Link href="/examsgenerator">
+          <div className="text-purple-500 cursor-pointer">
+            <SlDocs className="text-4xl" />
+          </div>
+        </Link>
       </div>
-      <div className="w-full h-full">{children}</div>
+      <div className="w-full h-full my-6 flex justify-center ">
+        <section className="w-full max-w-[1080px]">{children}</section>
+      </div>
     </div>
   );
 };

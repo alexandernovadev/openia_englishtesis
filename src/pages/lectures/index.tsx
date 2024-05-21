@@ -30,8 +30,28 @@ const LectureList = () => {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="bg-gray-900 w-full h-screen text-center mt-4 text-white">
-          Loading...
+        <div className="bg-gray-900 p-5 h-screen">
+          <h1 className="text-2xl font-bold mb-4 text-white">Lecture List</h1>
+          <section className="overflow-scroll h-[94%]">
+            <ul className="space-y-4">
+              {Array(4)
+                .fill(null)
+                .map((_, index) => (
+                  <li
+                    key={index}
+                    className="p-4 bg-gray-800 shadow rounded-lg flex items-center space-x-4 animate-pulse"
+                  >
+                    <div className="flex-shrink-0">
+                      <div className="h-12 w-12 bg-gray-500 rounded-full"></div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-gray-700 bg-gray-700 rounded h-6 w-32"></h2>
+                      <p className="text-gray-600 bg-gray-600 rounded h-4 w-24 mt-2"></p>
+                    </div>
+                  </li>
+                ))}
+            </ul>
+          </section>
         </div>
       </DashboardLayout>
     );
@@ -55,7 +75,6 @@ const LectureList = () => {
               <li
                 key={lecture.lectureID}
                 className="p-4 bg-gray-800 shadow rounded-lg flex items-center space-x-4 cursor-pointer"
-                onClick={() => handleLectureClick(lecture._id)}
               >
                 <div className="flex-shrink-0">
                   <div className="h-12 w-12 bg-gray-500 rounded-full overflow-hidden">
@@ -69,12 +88,12 @@ const LectureList = () => {
                       />
                     ) : (
                       <Image
-                      src={imagedDefault}
-                      alt="Lecture Image"
-                      className=" object-cover rounded-full my-2 "
-                      width={180}
-                      height={200}
-                    />
+                        src={imagedDefault}
+                        alt="Lecture Image"
+                        className=" object-cover rounded-full my-2 "
+                        width={180}
+                        height={200}
+                      />
                     )}
                   </div>
                 </div>
@@ -82,7 +101,23 @@ const LectureList = () => {
                   <h2 className="text-xl font-semibold text-white">
                     {lecture.content.split("\n")[0].replace(/#/g, "")}
                   </h2>
+
                   <p className="text-gray-400">ID: {lecture.lectureID}</p>
+
+                  <div className="flex flex-row space-x-2 mt-2">
+                    <button
+                      onClick={() => handleLectureClick(lecture._id)}
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      Generate Exam
+                    </button>
+                    <button
+                      onClick={() => handleLectureClick(lecture._id)}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      View
+                    </button>
+                  </div>
                 </div>
               </li>
             ))}
