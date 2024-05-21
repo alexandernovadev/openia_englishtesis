@@ -34,35 +34,37 @@ const ExamsPage = () => {
   return (
     <DashboardLayout>
       <div className="my-2 mx-4">
-        <h1 className="mb-5 text-4xl">Exams </h1>
+        <h1 className="font-bold text-5xl">Exams</h1>
 
         {isLoad && (
           <div className="flex justify-center items-center">
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         )}
-        {examData &&
-          examData.map((exam) => (
-            <div
-              key={exam._id}
-              className="my-3 bg-gray-800 shadow rounded-lg flex items-center space-x-4"
-            >
-              {" "}
-              <div className="px-2 py-2 flex flex-col">
-                <h2 className="text-2xl font-bold mb-2">{exam.title}</h2>
-                <p className="text-gray-600">
-                  Created at: {new Date(exam.createdAt!).toLocaleDateString()}
-                </p>
-                <>Prguntas : {exam.questions.length}</>
-                <Link
-                  href={`/exams/${exam._id}`}
-                  className="w-[200px] text-xl p-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  Ver
-                </Link>
+        <section className="h-[680px] overflow-scroll my-6">
+          {examData &&
+            examData.map((exam) => (
+              <div
+                key={exam._id}
+                className="my-3 bg-gray-800 shadow rounded-lg flex items-center space-x-4"
+              >
+                {" "}
+                <div className="px-2 py-2 flex flex-col">
+                  <h2 className="text-2xl font-bold mb-2">{exam.title}</h2>
+                  <p className="text-gray-600">
+                    Created at: {new Date(exam.createdAt!).toLocaleDateString()}
+                  </p>
+                  <>Prguntas : {exam.questions.length}</>
+                  <Link
+                    href={`/exams/${exam._id}`}
+                    className="w-[200px] text-xl p-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    Ver
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </section>
       </div>
     </DashboardLayout>
   );

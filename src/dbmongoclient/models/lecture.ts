@@ -11,7 +11,6 @@ export interface Lecture extends Document {
 }
 
 const LectureSchema: Schema = new Schema({
-  lectureID: { type: String, required: true, unique: true },
   content: { type: String, required: true },
   level: { type: String, required: true },
   topic: { type: String, required: true },

@@ -60,7 +60,7 @@ const GenerateTexts = ({
         }
       }
 
-      if (text.length > 200 && text.length !== 0) {
+      if ( text.length !== 0 && text.length > 200 ) {
         const imgResponse = await axios.post("/api/lectures/imagenarator", {
           prompt: topicUser,
         });

@@ -31,7 +31,7 @@ const LectureList = () => {
     return (
       <DashboardLayout>
         <div className="bg-gray-900 p-5 h-screen">
-          <h1 className="text-2xl font-bold mb-4 text-white">Lecture List</h1>
+          <h1>Lectures</h1>
           <section className="overflow-scroll h-[94%]">
             <ul className="space-y-4">
               {Array(4)
@@ -65,17 +65,20 @@ const LectureList = () => {
     router.push(`/lectures/${lectureID}`); // Navigate to /lectures/ID
   };
 
-  const handleExamGenerateClick = (lectureContent: string, lectureID: string) => {
+  const handleExamGenerateClick = (
+    lectureContent: string,
+    lectureID: string
+  ) => {
     router.push({
-      pathname: '/examsgenerator',
-      query: { lectureID, lectureContent: encodeURIComponent(lectureContent) }
+      pathname: "/examsgenerator",
+      query: { lectureID, lectureContent: encodeURIComponent(lectureContent) },
     });
   };
 
   return (
     <DashboardLayout>
       <div className="bg-gray-900 p-5 h-screen">
-        <h1 className="text-2xl font-bold mb-4 text-white">Lecture List</h1>
+        <h1>Lectures</h1>
         <section className="overflow-scroll h-[94%]">
           <ul className="space-y-4">
             {lectures.map((lecture: any) => (
@@ -114,10 +117,7 @@ const LectureList = () => {
                   <div className="flex flex-row space-x-2 mt-2">
                     <button
                       onClick={() =>
-                        handleExamGenerateClick(
-                          lecture.content,
-                          lecture._id
-                        )
+                        handleExamGenerateClick(lecture.content, lecture._id)
                       }
                       className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
                     >

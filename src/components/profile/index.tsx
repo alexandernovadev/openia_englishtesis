@@ -2,6 +2,6 @@ import React from 'react'
 
 export const Profile = () => {
   return (
-    <div>Profile</div>
+    <h1>Profile</h1>
   )
 }

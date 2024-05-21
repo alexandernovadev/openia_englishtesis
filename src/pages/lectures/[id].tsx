@@ -144,9 +144,9 @@ const LectureDetail = () => {
                 />
               )}
 
-              <h1 className="text-6xl font-bold mb-4">
+              <span className="text-6xl font-bold mb-4">
                 {renderMarkdownWithClickableWords("#" + title)}
-              </h1>
+              </span>
             </div>
 
             <div className="prose prose-invert overflow-scroll h-[400px]">

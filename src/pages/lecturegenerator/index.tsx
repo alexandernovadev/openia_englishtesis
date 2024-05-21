@@ -26,10 +26,7 @@ const LectureGenerator = () => {
 
   const handleSave = async () => {
     try {
-
-      // Guardar conferencia
       const lectureResponse = await axios.post("/api/lectures", {
-        lectureID: new Date().getTime().toString(), // Generar un ID único
         content,
         level,
         topic,
@@ -37,7 +34,7 @@ const LectureGenerator = () => {
       });
 
       console.log("Lecture saved successfully", lectureResponse.data);
-      setShowConfetti(true); // Show confetti
+      setShowConfetti(true); 
     } catch (error) {
       console.error("Error during save process:", error);
     }
