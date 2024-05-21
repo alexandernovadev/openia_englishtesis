@@ -61,7 +61,7 @@ const ExamGenerator = () => {
     if (showConfetti) {
       const timer = setTimeout(() => {
         setShowConfetti(false);
-        router.push("/lectures");
+        router.push("/exams");
       }, 1300);
       return () => clearTimeout(timer);
     }

@@ -42,6 +42,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             <SlDocs className="text-4xl" />
           </div>
         </Link>
+
+        <Link href="/exams">
+          <div className="text-amber-500 cursor-pointer">
+            <SlDocs className="text-4xl" />
+          </div>
+        </Link>
       </div>
       <div className="w-full h-full my-6 flex justify-center ">
         <section className="w-full max-w-[1080px]">{children}</section>
