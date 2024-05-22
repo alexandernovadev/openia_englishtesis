@@ -132,6 +132,7 @@ const LectureGenerator = () => {
           setTopicUserDB={setTopicUserDB}
           onTextUpdate={setGeneratedText}
           setGeneratedImage={setGeneratedImage}
+          generatedImage={generatedImage}
         />
       </div>
     </DashboardLayout>

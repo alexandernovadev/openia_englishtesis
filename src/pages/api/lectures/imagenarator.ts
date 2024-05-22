@@ -22,7 +22,7 @@ export default async function handler(
 
   try {
     const response = await openai.images.generate({
-      prompt,
+      prompt:"Generate one image to put like a portait of Book, this related to"+prompt+ " be creative and artitic",
       n: 1,
       size: "256x256",
       response_format: "b64_json",

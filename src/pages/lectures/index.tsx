@@ -83,7 +83,7 @@ const LectureList = () => {
           <ul className="space-y-4">
             {lectures.map((lecture: any) => (
               <li
-                key={lecture.lectureID}
+                key={lecture._id}
                 className="p-4 bg-gray-800 shadow rounded-lg flex items-center space-x-4 cursor-pointer"
               >
                 <div className="flex-shrink-0">
@@ -112,7 +112,7 @@ const LectureList = () => {
                     {lecture.content.split("\n")[0].replace(/#/g, "")}
                   </h2>
 
-                  <p className="text-gray-400">ID: {lecture.lectureID}</p>
+                  <p className="text-gray-400">ID: {lecture._id}</p>
 
                   <div className="flex flex-row space-x-2 mt-2">
                     <button

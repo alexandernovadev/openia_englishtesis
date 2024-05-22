@@ -10,9 +10,8 @@ const lecturesHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "POST":
       try {
-        const { lectureID, content, level, topic,img } = req.body;
+        const { content, level, topic,img } = req.body;
         const newLecture = new LectureModel({
-          lectureID,
           content,
           level,
           topic,

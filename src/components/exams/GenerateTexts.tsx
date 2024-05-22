@@ -5,8 +5,9 @@ import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
 
 interface GenerateTextsProps {
   level?: string;
+  generatedImage?: string;
   paragraphs?: number;
-  setTopicUserDB?: (text: string) => void; 
+  setTopicUserDB?: (text: string) => void;
   onTextUpdate?: (text: string) => void;
   setGeneratedImage?: (text: string) => void;
 }
@@ -15,6 +16,7 @@ const GenerateTexts = ({
   level = "B2",
   setTopicUserDB,
   paragraphs = 1,
+  generatedImage,
   onTextUpdate,
   setGeneratedImage,
 }: GenerateTextsProps) => {
@@ -59,21 +61,28 @@ const GenerateTexts = ({
           textRef.current.scrollTop = textRef.current.scrollHeight;
         }
       }
-
-      if ( text.length !== 0 && text.length > 200 ) {
-        const imgResponse = await axios.post("/api/lectures/imagenarator", {
-          prompt: topicUser,
-        });
-        const img = imgResponse.data.image;
-        console.log("Generated image:", img);
-        setGeneratedImage && setGeneratedImage(img);
-      }
     } catch (err) {
       setError("Failed to fetch the generated text.");
     } finally {
       setLoading(false);
+      genrateImageGpt()
     }
   };
+
+  const genrateImageGpt = async () => {
+    const imgResponse = await axios.post("/api/lectures/imagenarator", {
+      prompt: topicUser,
+    });
+    const img = imgResponse.data.image;
+    console.log("Generated image:", img);
+    setGeneratedImage && setGeneratedImage(img);
+  };
+
+  // useEffect(() => {
+  //   if (text.length == 100) {
+  //     genrateImageGpt();
+  //   }
+  // }, [text]);
 
   useEffect(() => {
     if (onTextUpdate) {

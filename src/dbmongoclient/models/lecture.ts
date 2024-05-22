@@ -1,7 +1,6 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface Lecture extends Document {
-  lectureID: string;
   content: string;
   level: string;
   topic: string;
