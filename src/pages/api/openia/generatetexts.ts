@@ -21,7 +21,8 @@ export default async function handler(
       {
         role: "system",
         content: `
-        Create a history text about '${prompt}'. This text is for learning English, using vocabulary at the ${level} level and consisting of ${paragraphs} paragraphs.
+        Create a history text about '${prompt}'. This text is for learning English, using vocabulary at the ${level} level
+        and consisting of ${paragraphs} paragraphs.
 
         Instructions:
         1) The entire text must be in English.
