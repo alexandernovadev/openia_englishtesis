@@ -58,7 +58,11 @@ const LectureList = () => {
   }
 
   if (error) {
-    return <div className="text-center mt-4 text-red-500">{error}</div>;
+    return (
+      <DashboardLayout>
+        <div className="text-center mt-4 text-red-500">{error}</div>{" "}
+      </DashboardLayout>
+    );
   }
 
   const handleLectureClick = (lectureID: string) => {
