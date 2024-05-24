@@ -113,30 +113,16 @@ const LectureDetail = () => {
 
   return (
     <DashboardLayout>
-      <section className=" px-5 text-green-400 underline">
+      <section className=" text-green-400 underline">
         <Link href="/lectures">
-          <span className="flex items-center">
-            <IoArrowBackCircle /> Lecturas
+          <span className="flex items-center ">
+            <IoArrowBackCircle  className="mt-1 mx-3"/> <span>Lecturas</span>
           </span>
         </Link>
       </section>
       <div className="bg-gray-900 p-2 min-h-screen text-white">
         {lecture ? (
           <>
-            <section className="p-1">
-              <div>
-                Level{" "}
-                <span className="text-sm font-bold mb-1 text-white bg-green-600 rounded-lg p-1">
-                  {lecture.level}
-                </span>
-              </div>
-              <div>
-                <span className="text-gray-400 text-sm">
-                  Created at:{" "}
-                  {new Date(lecture.createdAt!).toLocaleDateString()}
-                </span>
-              </div>
-            </section>
             <div className="flex flex-row justify-center items-center gap-3">
               {lecture.img ? (
                 <img
@@ -155,12 +141,24 @@ const LectureDetail = () => {
                 />
               )}
 
-              <span className="text-5xl font-bold mb-4">
-                {renderMarkdownWithClickableWords("#" + title)}
-              </span>
+              <section className="p-1 flex flex-col">
+                  <span className="text-4xl font-bold mb-4">
+                    {renderMarkdownWithClickableWords("#" + title)}
+                  </span>
+                <div className="flex flex-row items-center text-[10px]">
+                  <span>Level</span>
+                  <span className=" font-bold mb-1 mx-2 text-white bg-green-600 rounded-lg p-1">
+                    {lecture.level}
+                  </span>
+                  <span className="text-gray-400 text-[12px] mx-3">
+                    Created at:{" "}
+                    {new Date(lecture.createdAt!).toLocaleDateString()}
+                  </span>
+                </div>
+              </section>
             </div>
 
-            <div className="prose prose-invert overflow-scroll h-[480px] pb-8">
+            <div className="prose prose-invert overflow-scroll h-[580px] pb-8">
               {renderMarkdownWithClickableWords(remainingContent)}
             </div>
           </>
