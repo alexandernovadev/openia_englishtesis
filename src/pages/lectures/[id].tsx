@@ -34,7 +34,15 @@ const LectureDetail = () => {
   }, [id]);
 
   const handleWordClick = (word: string) => {
-    speakWord(word);
+    // speakWord(word);
+  };
+
+  const doubleClick = (word: string) => {
+    window.open(
+      `https://dictionary.cambridge.org/us/dictionary/english-spanish/${word}#dataset_caldes`,
+      "_blank",
+      "width=520,height=500"
+    );
   };
 
   const speakWord = (word: string) => {
@@ -72,8 +80,11 @@ const LectureDetail = () => {
         line.split(" ").map((word, wordIndex) => (
           <span
             key={`${lineIndex}-${wordIndex}`}
-            className="cursor-pointer hover:underline"
+            className={`cursor-pointer hover:underline ${
+              tag == "p" && "text-2xl font-semibold"
+            }  ${tag == "h2" && "text-4xl font-medium"} `}
             onClick={() => handleWordClick(word)}
+            onDoubleClick={() => doubleClick(word)}
           >
             {word}{" "}
           </span>
@@ -102,25 +113,25 @@ const LectureDetail = () => {
 
   return (
     <DashboardLayout>
-      <section className="pb-2 pt-5 px-5 text-green-400 underline">
+      <section className=" px-5 text-green-400 underline">
         <Link href="/lectures">
           <span className="flex items-center">
             <IoArrowBackCircle /> Lecturas
           </span>
         </Link>
       </section>
-      <div className="bg-gray-900 p-5 min-h-screen text-white">
+      <div className="bg-gray-900 p-2 min-h-screen text-white">
         {lecture ? (
           <>
-            <section className="py-2">
+            <section className="p-1">
               <div>
                 Level{" "}
-                <span className="text-xl font-bold mb-4 text-white bg-green-600 rounded-lg p-1">
+                <span className="text-sm font-bold mb-1 text-white bg-green-600 rounded-lg p-1">
                   {lecture.level}
                 </span>
               </div>
               <div>
-                <span className="text-gray-400">
+                <span className="text-gray-400 text-sm">
                   Created at:{" "}
                   {new Date(lecture.createdAt!).toLocaleDateString()}
                 </span>
@@ -131,25 +142,25 @@ const LectureDetail = () => {
                 <img
                   src={`data:image/png;base64,${lecture.img}`}
                   alt="Lecture Image"
-                  className="object-cover rounded-full my-2"
+                  className="object-cover rounded-lg my-2"
                   width={180}
                 />
               ) : (
                 <Image
                   src={imagedDefault}
                   alt="Lecture Image"
-                  className="object-cover rounded-full my-2"
+                  className="object-cover rounded-lg my-2"
                   width={180}
                   height={200}
                 />
               )}
 
-              <span className="text-6xl font-bold mb-4">
+              <span className="text-5xl font-bold mb-4">
                 {renderMarkdownWithClickableWords("#" + title)}
               </span>
             </div>
 
-            <div className="prose prose-invert overflow-scroll h-[400px]">
+            <div className="prose prose-invert overflow-scroll h-[480px] pb-8">
               {renderMarkdownWithClickableWords(remainingContent)}
             </div>
           </>
