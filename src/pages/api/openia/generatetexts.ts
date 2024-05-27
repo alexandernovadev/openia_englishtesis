@@ -36,7 +36,7 @@ export default async function handler(
           Paragraph 3
           ...
           
-          (The text should have ${paragraphs} paragraphs, each with a minimum of 96 words, excluding the title and subtitle)
+          (The text should have ${paragraphs} paragraphs, each with a minimum of 120 words, excluding the title and subtitle)
         `,
       },
     ],

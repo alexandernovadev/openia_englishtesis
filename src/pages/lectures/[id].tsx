@@ -8,6 +8,9 @@ import { Lecture } from "@/interfaces/lecture";
 import imagedDefault from "../../../public/default.webp";
 import Image from "next/image";
 import { LecureSkeleton } from "@/components/loadings/LecureSkeleton";
+import { HiMiniSpeakerWave } from "react-icons/hi2";
+import { FaBookAtlas } from "react-icons/fa6";
+import { SiGoogletranslate } from "react-icons/si";
 
 const LectureDetail = () => {
   const router = useRouter();
@@ -15,6 +18,9 @@ const LectureDetail = () => {
   const [lecture, setLecture] = useState<Lecture>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // TODO This should be in Redux
+  const [wordActive, setWordActive] = useState("");
 
   useEffect(() => {
     const fetchLecture = async () => {
@@ -34,19 +40,27 @@ const LectureDetail = () => {
   }, [id]);
 
   const handleWordClick = (word: string) => {
-    // speakWord(word);
+    setWordActive(word);
   };
 
-  const doubleClick = (word: string) => {
+  const openDictionaryCambridge = () => {
     window.open(
-      `https://dictionary.cambridge.org/us/dictionary/english-spanish/${word}#dataset_caldes`,
+      `https://dictionary.cambridge.org/us/dictionary/english-spanish/${wordActive}#dataset_caldes`,
       "_blank",
       "width=520,height=500"
     );
   };
 
-  const speakWord = (word: string) => {
-    const utterance = new SpeechSynthesisUtterance(word);
+  const openDictionaryGoogleTranslate = () => {
+    window.open(
+      `https://translate.google.com/?sl=en&tl=es&text=${wordActive}&op=translate`,
+      "_blank",
+      "width=520,height=500"
+    );
+  };
+
+  const speakWord = () => {
+    const utterance = new SpeechSynthesisUtterance(wordActive);
     window.speechSynthesis.speak(utterance);
   };
 
@@ -84,7 +98,6 @@ const LectureDetail = () => {
               tag == "p" && "text-2xl font-semibold"
             }  ${tag == "h2" && "text-4xl font-medium"} `}
             onClick={() => handleWordClick(word)}
-            onDoubleClick={() => doubleClick(word)}
           >
             {word}{" "}
           </span>
@@ -116,7 +129,7 @@ const LectureDetail = () => {
       <section className=" text-green-400 underline">
         <Link href="/lectures">
           <span className="flex items-center ">
-            <IoArrowBackCircle  className="mt-1 mx-3"/> <span>Lecturas</span>
+            <IoArrowBackCircle className="mt-1 mx-3" /> <span>Lecturas</span>
           </span>
         </Link>
       </section>
@@ -142,9 +155,9 @@ const LectureDetail = () => {
               )}
 
               <section className="p-1 flex flex-col">
-                  <span className="text-4xl font-bold mb-4">
-                    {renderMarkdownWithClickableWords("#" + title)}
-                  </span>
+                <span className="text-4xl font-bold mb-4">
+                  {renderMarkdownWithClickableWords("#" + title)}
+                </span>
                 <div className="flex flex-row items-center text-[10px]">
                   <span>Level</span>
                   <span className=" font-bold mb-1 mx-2 text-white bg-green-600 rounded-lg p-1">
@@ -158,9 +171,36 @@ const LectureDetail = () => {
               </section>
             </div>
 
-            <div className="prose prose-invert overflow-scroll h-[580px] pb-8">
+            <div className="prose prose-invert overflow-scroll h-[580px] pb-32">
               {renderMarkdownWithClickableWords(remainingContent)}
             </div>
+
+            <section className="w-full bg-gray-800 sticky bottom-0 rounded-xl p-2 border-white border">
+              {wordActive.length == 0 ? (
+                <h3>Select Word</h3>
+              ) : (
+                <section className="flex items-center gap-3">
+                  <h3 className="capitalize text-yellow-600 text-4xl">
+                    {wordActive.replace(/^[.,-]+/, "").replace(/[.,-]+$/, "")}
+                  </h3>
+                  <span onClick={speakWord} className="cursor-pointer mt-2">
+                    <HiMiniSpeakerWave />
+                  </span>{" "}
+                  <span
+                    onClick={openDictionaryCambridge}
+                    className="cursor-pointer mt-2"
+                  >
+                    <FaBookAtlas />
+                  </span>
+                  <span
+                    onClick={openDictionaryGoogleTranslate}
+                    className="cursor-pointer mt-2"
+                  >
+                    <SiGoogletranslate />
+                  </span>
+                </section>
+              )}
+            </section>
           </>
         ) : (
           <div>Lecture not found</div>

@@ -31,7 +31,7 @@ const LectureList = () => {
     return (
       <DashboardLayout>
         <div className="bg-gray-900 p-5 h-screen">
-          <h1>Lectures</h1>
+          <h1 className="">Lectures</h1>
           <section className="overflow-scroll h-[94%]">
             <ul className="space-y-4">
               {Array(4)
@@ -82,7 +82,7 @@ const LectureList = () => {
   return (
     <DashboardLayout>
       <div className="bg-gray-900 p-5 h-screen">
-        <h1>Lectures</h1>
+        <h1 className="text-5xl font-bold text-green-600 mb-6">Lectures</h1>
         <section className="overflow-scroll h-[94%]">
           <ul className="space-y-4">
             {lectures.map((lecture: any) => (

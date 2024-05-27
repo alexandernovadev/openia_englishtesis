@@ -4,6 +4,7 @@ import Link from "next/link";
 import { RxAvatar } from "react-icons/rx";
 import { GiVendingMachine } from "react-icons/gi";
 import { FaBookReader } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import { SlDocs } from "react-icons/sl";
 import { GiGearHammer } from "react-icons/gi";
 import { IoLogOutOutline } from "react-icons/io5";
@@ -59,7 +60,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <>
             <hr />
             <h6 style={{ fontSize: 12 }}>Admin</h6>
-
             <Link href="/examsgenerator">
               <div className="text-purple-500 cursor-pointer">
                 <GiGearHammer className="text-4xl" />
@@ -69,6 +69,11 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <div className="text-yellow-500 cursor-pointer">
                 <GiVendingMachine className="text-4xl" />
               </div>
+            </Link>{" "}
+            <Link href="/users">
+              <div className="text-amber-800 cursor-pointer">
+                <FaUsers className="text-4xl" />
+              </div>
             </Link>
           </>
         )}
@@ -77,7 +82,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className=" w-full">
           <button
             onClick={handleLogout}
-            className="text-red-500 cursor-pointer mt-auto w-full"
+            className="text-red-500 cursor-pointer mt-auto w-full flex justify-center"
             title="Logout"
           >
             <IoLogOutOutline className="text-4xl" />
