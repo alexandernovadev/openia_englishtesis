@@ -34,7 +34,7 @@ const LectureGenerator = () => {
       });
 
       console.log("Lecture saved successfully", lectureResponse.data);
-      setShowConfetti(true); 
+      setShowConfetti(true);
     } catch (error) {
       console.error("Error during save process:", error);
     }
@@ -142,21 +142,32 @@ const LectureGenerator = () => {
   );
 };
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-  // const token = getCookie(context.req, "auth");
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const token = context.req.cookies.auth;
 
-  // if (!token || !verifyToken(token)) {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
 
-  // return {
-  //   props: {}, // Pasamos las props necesarias al componente
-  // };
-// };
+  const decodedToken = verifyToken(token);
+
+  if (!decodedToken || decodedToken.role !== "administrator") {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
 
 export default LectureGenerator;
