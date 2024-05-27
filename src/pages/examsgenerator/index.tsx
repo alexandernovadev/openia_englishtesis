@@ -175,21 +175,21 @@ const ExamGenerator = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const token = getCookie(context.req, "auth");
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const token = getCookie(context.req, "auth");
 
-  if (!token || !verifyToken(token)) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+//   if (!token || !verifyToken(token)) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {}, // Pasamos las props necesarias al componente
-  };
-};
+//   return {
+//     props: {}, // Pasamos las props necesarias al componente
+//   };
+// };
 
 export default ExamGenerator;

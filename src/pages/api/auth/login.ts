@@ -22,7 +22,7 @@ const loginHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    await clientPromise; // Asegúrate de que la conexión a la base de datos esté establecida
+    await clientPromise; 
 
     const user = await UserModel.findOne({ email });
     if (!user) {
@@ -37,7 +37,7 @@ const loginHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const token = jwt.sign(
       { userID: user.userID, email: user.email, role: user.role },
       secret,
-      { expiresIn: "1h" }
+      { expiresIn: "1y" }
     );
 
     res.setHeader(

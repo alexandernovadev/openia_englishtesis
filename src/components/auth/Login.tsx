@@ -9,6 +9,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -16,9 +17,13 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
     try {
       const response = await axios.post("/api/auth/login", { email, password });
       const userData = response.data.user;
+
+      console.log(userData);
+
       dispatch(
         setUser({
           userID: userData.userID,
@@ -29,9 +34,11 @@ const Login: React.FC = () => {
           isAuthenticated: true,
         })
       );
-      router.push("/dashboard");
+      router.push("/");
     } catch (err) {
       setError("Invalid email or password");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,9 +78,12 @@ const Login: React.FC = () => {
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
+            disabled={isLoading}
+            className={`${
+              isLoading && "animate-pulse"
+            } w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300`}
           >
-            Login
+            {!isLoading ? "Login" : "...."}
           </button>
         </form>
       </div>

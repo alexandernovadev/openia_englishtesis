@@ -1,31 +1,13 @@
-import Login from "@/components/auth/Login";
-import { verifyToken } from "@/utils/auth";
-import { getCookie } from "@/utils/cookies";
-import { GetServerSideProps } from "next";
+import DashboardLayout from "@/components/layouts/DashBoardLayout";
 
 function Home() {
   return (
-    <>
-      <Login />
-    </>
+    <DashboardLayout>
+      <h1>
+        Aqui van las opciones y un parrafo de introdcuoon depende del perfil
+      </h1>
+    </DashboardLayout>
   );
 }
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const token = getCookie(context.req, "auth");
-
-//   if (token && verifyToken(token)) {
-//     return {
-//       redirect: {
-//         destination: "/dashboard",
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {}, // Pasamos las props necesarias al componente
-//   };
-// };
 
 export default Home;
