@@ -40,7 +40,7 @@ export default async function handler(
         `,
       },
     ],
-    model: "gpt-4",
+    model: "gpt-4o",
     temperature: 0.3,
   });
 

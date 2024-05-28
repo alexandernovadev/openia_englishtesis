@@ -27,7 +27,7 @@ const lecturesHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     case "GET":
       try {
-        const { filter, limit = 4 } = req.query;
+        const { filter, limit =20 } = req.query;
         const query = filter ? { topic: new RegExp(filter as string, 'i') } : {};
 
         const lectures = await LectureModel.find(query)

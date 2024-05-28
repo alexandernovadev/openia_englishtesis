@@ -171,7 +171,7 @@ const LectureDetail = () => {
               </section>
             </div>
 
-            <div className="prose prose-invert overflow-scroll h-[580px] pb-32">
+            <div className="prose prose-invert overflow-scroll h-[580px] pb-32 pr-10">
               {renderMarkdownWithClickableWords(remainingContent)}
             </div>
 
@@ -181,7 +181,7 @@ const LectureDetail = () => {
               ) : (
                 <section className="flex items-center gap-3">
                   <h3 className="capitalize text-yellow-600 text-4xl">
-                    {wordActive.replace(/^[.,-]+/, "").replace(/[.,-]+$/, "")}
+                    {wordActive.replace(/^[.,-:]+/, "").replace(/[.,-:]+$/, "")}
                   </h3>
                   <span onClick={speakWord} className="cursor-pointer mt-2">
                     <HiMiniSpeakerWave />
