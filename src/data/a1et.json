@@ -1,0 +1,57 @@
+{
+  "present_tenses": [
+    "Present simple forms of ‘to be’ – am/is/are",
+    "Present simple – I do, I don’t, Do I?",
+    "Present continuous – I’m doing, I’m not doing, Are you doing?",
+    "Present simple or present continuous?",
+    "Have got"
+  ],
+  "past_tenses": [
+    "Was/were – past simple of ‘be’",
+    "Past simple – regular/irregular verbs",
+    "Past simple – negatives and questions"
+  ],
+  "future": [
+    "‘Will’ and ‘shall’ – Future",
+    "Be going to – plans and predictions"
+  ],
+  "modals_imperative": [
+    "Can, can’t – ability, possibility, permission",
+    "The imperative – Sit down! Don’t talk!",
+    "Would you like…? I’d like…"
+  ],
+
+  "ing_infinitive": ["Verbs + to + infinitive and verbs + -ing"],
+  "articles_nouns_pronouns_determiners": [
+    "A/an, plurals – singular and plural forms",
+    "A/an, the, no article – the use of articles in English",
+    "This, that, these, those",
+    "Possessive adjectives and subject pronouns (I/my, you/your, etc.)",
+    "Object pronouns vs subject pronouns – me or I, she or her?",
+    "A, some, any – countable and uncountable nouns",
+    "Much, many, a lot of, a little, a few",
+    "Whose, possessive ‘s – Whose is this? It’s Mike’s"
+  ],
+  "there_it": [
+    "There is, there are – there was, there were",
+    "There or it",
+    "The difference between ‘this’ and ‘it’"
+  ],
+  "adjectives_adverbs": [
+    "Adjectives – old, interesting, expensive, etc.",
+    "Adverbs of manner (slowly) – or adjectives (slow)?",
+    "Comparative adjectives – older than, more important than, etc.",
+    "Superlative adjectives – the oldest, the most important, etc."
+  ],
+  "conjunctions": ["Conjunctions: and, but, or, so, because"],
+  "prepositions": [
+    "At, in, on – prepositions of time",
+    "At, in, on – prepositions of place",
+    "Next to, under, between, in front of, behind, over, etc."
+  ],
+  "questions": ["Questions – word order and question words"],
+  "word_order": [
+    "Adverbs of frequency with present simple",
+    "Basic word order in English"
+  ]
+}

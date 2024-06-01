@@ -1,0 +1,50 @@
+{
+  "present_tenses": ["Present perfect simple or continuous"],
+  "past_tenses": ["Narrative tenses – all past tenses"],
+  "future": ["Future continuous and future perfect"],
+  "verb_tense_reviews": ["Review of all verb tenses B1-B2"],
+  "modals_imperative": [
+    "Needn’t, don’t need to, didn’t need to, needn’t have",
+    "Past modal verbs of deduction",
+    "Likely, unlikely, bound, definitely, probably – probability",
+    "Used to, be used to, get used to",
+    "Would and used to – past habits and repeated actions",
+    "Verbs of the senses: look, sound, feel, etc.",
+    "Do or Make – Which is it?"
+  ],
+  "conditionals_if_wish": [
+    "Zero and first conditional and future time clauses",
+    "When I do vs When I have done – Future time clauses",
+    "Second and third conditionals – unreal conditionals",
+    "Wishes and regrets – I wish / if only"
+  ],
+  "passive": [
+    "The passive voice – all tenses",
+    "The passive with reporting verbs – It is said that …",
+    "Have something done"
+  ],
+  "ing_infinitive": [
+    "Gerund or infinitive – verb patterns",
+    "Would rather, would prefer – expressing preference",
+    "Reporting verbs – admit doing, refuse to do, etc."
+  ],
+  "articles_nouns_pronouns_determiners": [
+    "Quantifiers – all, most, both, either, neither, any, no, none"
+  ],
+  "relative_clauses_pronouns_adverbs": [
+    "Whatever, whenever, wherever, whoever, however"
+  ],
+  "auxiliary_verbs": ["Auxiliary verbs – different uses"],
+  "adjectives_adverbs": [
+    "The … the … comparatives",
+    "Participles as adjectives (-ed / -ing adjectives)",
+    "So, such (a), so much, so many",
+    "Adjectives without noun",
+    "Adjective order",
+    "Already, still, yet – What’s the difference?",
+    "Pretty, rather, quite, fairly"
+  ],
+  "conjunctions_clauses": ["Clauses of contrast and purpose"],
+  "questions": ["Questions – different types", "Indirect questions"],
+  "word_order": ["Position of adverbs and adverb phrase"]
+}

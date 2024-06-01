@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       try {
-        const exams = await ExamModel.find();
+        const exams = await ExamModel.find().sort({ createdAt: -1 });
         res.status(200).json(exams);
       } catch (error) {
         res.status(500).json({ error: "Failed to fetch exams" });

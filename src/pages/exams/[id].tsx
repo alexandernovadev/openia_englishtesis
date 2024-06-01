@@ -136,10 +136,13 @@ const ExamDetail = () => {
         </Link>
       </section>
       <div className="bg-gray-900 p-3 h-screen text-white">
-        <h1 className="text-3xl font-bold mb-4">{examData?.title}</h1>
-        <p className="text-2xl">Difficulty: {examData?.difficulty}</p>
-        <p className="text-2xl">Level: {examData?.level}</p>
-        <section className="h-[500px] overflow-auto">
+        <h1 className="text-3xl font-bold mb-2">{examData?.title}</h1>
+        <p className="text-xl">
+          <span className="text-yellow-700">Difficulty:</span>
+          {examData?.difficulty} - <span className="text-blue-700">Level:</span>{" "}
+          {examData?.level}
+        </p>
+        <section className="h-[590px] overflow-auto rounded-xl">
           {examData?.questions.map((q) => RenderQuestion(q))}
         </section>
         {!isGraded && (

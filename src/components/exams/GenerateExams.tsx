@@ -20,7 +20,9 @@ const GenerateExams = ({
   const [text, setText] = useState("");
 
   // This one woulb be the content of lecture
-  const [topicUser, setTopicUser] = useState("");
+  const [topicUser, setTopicUser] = useState(
+    "Examen tipo toefl sobre gramatica B2, "
+  );
 
   const [error, setError] = useState("");
   const textRef = useRef<HTMLDivElement>(null);
@@ -38,8 +40,7 @@ const GenerateExams = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt:
-          lecture ||"Examen tipo toefl sobre gramatica B2, ",
+          prompt: lecture || topicUser,
           level,
           ammountQuestions,
         }),
@@ -89,9 +90,19 @@ const GenerateExams = ({
   return (
     <div className="mx-auto p-4">
       <form className="flex" onSubmit={handleGenerateText}>
-        <h3 className="mx-4 cursor-pointer" title={lecture}>
-          {lecture?.split('##')[0]}
-        </h3>
+        {lecture ? (
+          <h3 className="mx-4 cursor-pointer" title={lecture}>
+            {lecture?.split("##")[0]}
+          </h3>
+        ) : (
+          <input
+            placeholder="Sobre que quieres generar el examen"
+            className="px-4 py-2 flex-1 mr-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+            type="text"
+            value={topicUser}
+            onChange={(e) => setTopicUser(e.target.value)}
+          />
+        )}
 
         <button
           type="submit"
