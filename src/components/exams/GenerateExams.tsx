@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 interface GenerateTextsProps {
   level?: string;
@@ -121,8 +123,10 @@ const GenerateExams = ({
             No text generated yet.
           </div>
         )}
-
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+   <SyntaxHighlighter language="json" style={atomDark}>
+      {text}
+    </SyntaxHighlighter>
+        {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown> */}
       </div>
     </div>
   );

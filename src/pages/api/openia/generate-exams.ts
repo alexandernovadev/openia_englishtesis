@@ -13,45 +13,57 @@ export default async function handler(
     return;
   }
 
-  const { prompt, level, ammountQuestions,difficultyExam } = req.body;
+  const { prompt, level, ammountQuestions, difficultyExam } = req.body;
 
-  console.log({level,ammountQuestions});
-  
-  const difficulty = ["HARD", "MEDIUM", "EASY"];
-  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
+  const detailedPrompt = `
+  Given the user prompt: "${prompt}", you need to create an English exam to evaluate the user's reading comprehension skills.
+  Consider the user's proficiency level: ${level} and the specified difficulties: ${String(difficultyExam)}. Use this difficulty level: "${difficultyExam[2]}".
+  You should act as an advanced English teacher, ensuring coherence in the questions, options, and correct answers.
+
+  The output should be in JSON format and include ${ammountQuestions} questions. Additionally, create a coherent and creative title for the exam that matches the content and level.
+
+  Example output: 
+
+  {
+    "title": "Creative and Coherent Exam Title",
+    "questions": [
+      {
+        "title": "Question statement",
+        "type": "MULTIPLE" | "UNIQUE",
+        "options": ["Option 1", "Option 2", "Option 3", "Option 4"],
+        "correctAnswer": "Correct Option"
+      }
+    ]
+  }
+
+  Please make sure:
+  1. Each question and its options are coherent and accurate.
+  2. Do not include duplicated questions or answers.
+  3. Verify that the correct answer is logically consistent with the question.
+
+  Extra Info:
+  Model of a Question (Question):
+  export interface Question {
+    title: string; // Question statement.
+    type: "MULTIPLE" | "UNIQUE"; // Type of question.
+    options?: string[]; // Available options for the question.
+    correctAnswer: string; // Correct answer to the question.
+  }
+
+  Do not include ' '''json' in the response.
+
+  Ensure each question has unique and distinct options, and the correct answer is precise and accurate.
+  `;
 
   const stream = await openai.chat.completions.create({
     stream: true,
     messages: [
       {
         role: "system",
-        content: `
-        Con base a este prompt del USER "${prompt}", deberas crear un examen en ingles,para evaluar su compresion lectora 
-        Debes de responder en formato JSON, debera tener en cuanta el level :${level} del use  y de las difucultades ${String(difficulty)} usaras esta "${difficulty[2]}"
-        Deberas actuar como un docente avanzado de ingles, para tener coherencia con la preguntas y la opciones y la(s) correcta(S)
-        
-       
-        Ejemplo de salida: 
-    
-        {
-          title: string; // Título del examen.
-          questions: Question[]; // Lista de preguntas incluidas en el examen. SOLLO PONER ${ammountQuestions} PREGUNTAS
-        }
-
-        
-        ____INFO EXTRA_____
-        // Modelo de Pregunta (Question)
-        export interface Question {
-          title: string; // Enunciado de la pregunta.
-          type: "MULTIPLE" | "UNIQUE"  // Tipo de pregunta.
-          options?: string[]; // Opciones disponibles para responder.
-          correctAnswer: string; // Respuesta correcta a la pregunta.
-        }
-        
-        `,
+        content: detailedPrompt,
       },
     ],
-    model: "gpt-4o",
+    model: "gpt-4",
     temperature: 0.3,
   });
 
