@@ -36,17 +36,17 @@ const QuestionSchema: Schema = new Schema({
 
 // Schema for Exam
 const ExamSchema: Schema = new Schema({
-  lectureID: { type: Schema.Types.ObjectId, ref: "Lecture"},
+  lectureID: { type: Schema.Types.ObjectId, ref: "Lecture" },
   title: { type: String, required: true },
   difficulty: {
-    type: String, 
+    type: String,
     required: true,
     enum: ["HARD", "MEDIUM", "EASY"],
   },
   level: {
     type: String,
     required: true,
-    enum: ["A1", "A2", "B1", "B2", "C1", "C2"],
+    enum: ["A1", "A2", "B1", "B1+", "B2", "C1", "C2"],
   },
   score: { type: Number, required: true },
   questions: { type: [QuestionSchema], required: true },
