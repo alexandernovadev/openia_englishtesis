@@ -8,6 +8,8 @@ interface GenerateTextsProps {
   lecture?: string;
   ammountQuestions?: number;
   sendExamJSON?: (text: Object) => void;
+  topicUser?: string;
+  setTopicUser?: (topic: string) => void;
 }
 
 const GenerateExams = ({
@@ -15,14 +17,11 @@ const GenerateExams = ({
   ammountQuestions = 10,
   sendExamJSON,
   lecture,
+  topicUser,
+  setTopicUser,
 }: GenerateTextsProps) => {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
-
-  // This one woulb be the content of lecture
-  const [topicUser, setTopicUser] = useState(
-    "Examen tipo toefl sobre gramatica B2, "
-  );
 
   const [error, setError] = useState("");
   const textRef = useRef<HTMLDivElement>(null);
@@ -100,7 +99,7 @@ const GenerateExams = ({
             className="px-4 py-2 flex-1 mr-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
             type="text"
             value={topicUser}
-            onChange={(e) => setTopicUser(e.target.value)}
+            onChange={(e) => setTopicUser && setTopicUser(e.target.value)}
           />
         )}
 

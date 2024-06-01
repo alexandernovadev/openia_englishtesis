@@ -6,10 +6,23 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { getCookie } from "@/utils/cookies";
 import { verifyToken } from "@/utils/auth";
-import GenerateTexts from "@/components/exams/GenerateTexts";
-import ConfettiExplosion from "react-confetti-explosion";
 import GenerateExams from "@/components/exams/GenerateExams";
+import ConfettiExplosion from "react-confetti-explosion";
 import { Exam } from "@/interfaces/Exam";
+
+import topicsA1 from "../../data/a1et.json";
+import topicsA2 from "../../data/a2et.json";
+import topicsB1 from "../../data/b1et.json";
+import topicsB1plus from "../../data/b1+et.json";
+import topicsB2 from "../../data/b2et.json";
+
+const topicsMap = {
+  A1: topicsA1,
+  A2: topicsA2,
+  B1: topicsB1,
+  "B1+": topicsB1plus,
+  B2: topicsB2,
+};
 
 const ExamGenerator = () => {
   const [level, setLevel] = useState("A1");
@@ -20,6 +33,10 @@ const ExamGenerator = () => {
   const [generatedText, setGeneratedText] = useState<Object>();
   const [showConfetti, setShowConfetti] = useState(false);
   const [generatedImage, setGeneratedImage] = useState("");
+
+  const [topicUser, setTopicUser] = useState(
+    "Examen tipo toefl sobre gramatica B2, "
+  );
   const router = useRouter();
   const { lectureID, lectureContent } = router.query;
 
@@ -73,9 +90,42 @@ const ExamGenerator = () => {
       <div className="bg-gray-900 p-4 w-full h-full">
         <section className="flex justify-between items-center">
           <div className="flex justify-center items-center">
-            <h2 className="text-2xl font-bold mx-5 text-center text-white">
+            <h4 className="text-2xl font-bold mx-5 text-center text-white border p-2 rounded-lg">
               Exams <br /> Generator
-            </h2>
+            </h4>
+            {(level === "A1" ||
+              level === "A2" ||
+              level === "B1" ||
+              level === "B1+" ||
+              level === "B2") && (
+              <section>
+                <h6 title="Promts" className="cursor-pointer">
+                  Suggested Promts
+                </h6>
+                <select
+                  name="propmttopic"
+                  className="max-w-[500px] px-4 py-2 mb-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+                  value={topicUser}
+                  onChange={(e) => setTopicUser(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Select a topic
+                  </option>
+                  {Object.entries(topicsMap[level]).map(([category, items]) => (
+                    <optgroup
+                      key={category}
+                      label={category.replace(/_/g, " ")}
+                    >
+                      {items.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+              </section>
+            )}
 
             {generatedImage && (
               <div className="flex justify-center">
@@ -103,6 +153,7 @@ const ExamGenerator = () => {
                 <option value="A1">A1</option>
                 <option value="A2">A2</option>
                 <option value="B1">B1</option>
+                <option value="B1+">B1+</option>
                 <option value="B2">B2</option>
                 <option value="C1">C1</option>
                 <option value="C2">C2</option>
@@ -169,6 +220,8 @@ const ExamGenerator = () => {
           lecture={titleLecture}
           ammountQuestions={ammountQuestions}
           sendExamJSON={formatToSendToMongo}
+          topicUser={topicUser}
+          setTopicUser={setTopicUser}
         />
       </div>
     </DashboardLayout>
@@ -199,7 +252,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {}, 
+    props: {},
   };
 };
 
