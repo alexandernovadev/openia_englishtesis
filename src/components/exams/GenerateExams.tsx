@@ -1,9 +1,6 @@
-import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm"; // Para soporte adicional de Markdown
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 interface GenerateTextsProps {
   level?: string;
@@ -107,7 +104,11 @@ const GenerateExams = ({
 
         <button
           type="submit"
-          className="px-4 py-2 w-1/6 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
+          className={
+            !loading
+              ? "px-4 py-2 w-1/6 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
+              : "animate-gradient bg-gradient-to-t from-green-500 to-blue-500 text-white py-2 px-4 rounded transition-all duration-500 ease-in-out"
+          }
           disabled={loading}
         >
           {loading ? "Generating..." : "Generate Exam"}
@@ -123,10 +124,9 @@ const GenerateExams = ({
             No text generated yet.
           </div>
         )}
-   <SyntaxHighlighter language="json" style={atomDark}>
-      {text}
-    </SyntaxHighlighter>
-        {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown> */}
+        <SyntaxHighlighter language="json" style={atomDark}>
+          {text}
+        </SyntaxHighlighter>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export default async function handler(
 
   const detailedPrompt = `
   Given the user prompt: "${prompt}", you need to create an English exam to evaluate the user's reading comprehension skills.
-  Consider the user's proficiency level: ${level} and the specified difficulties: ${String(difficultyExam)}. Use this difficulty level: "${difficultyExam[2]}".
+  Consider the user's proficiency level: ${level} and the specified difficulties: ${String(difficultyExam)} of (HARD, Midle, easy).
   You should act as an advanced English teacher, ensuring coherence in the questions, options, and correct answers.
 
   The output should be in JSON format and include ${ammountQuestions} questions. Additionally, create a coherent and creative title for the exam that matches the content and level.
