@@ -26,11 +26,13 @@ export default async function handler(
 
   Aquí hay un ejemplo de cómo estructurar el feedback:
 
-  <h3 style="color: #f6685e;">Lo siento, pero la respuesta seleccionada no es correcta. 😕</h3>
+  <h3 style="color: #f6685e;">Lo siento, pero la respuesta seleccionada no es correcta. 😕</h3> (USA VARIEDAD DE MENSJAES y emojis)
+  <h6 style="color: #FFEB3B;">AUI PON LA TRADUCCION</h6>
+  <span style="color: #CFD8DC;">AQUI PON EL IPA</span>
   <p>La frase correcta es: <span style="color: #4caf50;"><strong>"I wish I had more time to finish the project."</strong></span></p>
-  <p>En inglés, cuando expresamos un deseo sobre una situación que es contraria a los hechos actuales, usamos "wish" seguido de un verbo en tiempo pasado. En este caso, <strong>"I had"</strong> es la forma correcta porque estás expresando un deseo sobre algo que no es cierto en el presente (no tienes más tiempo para terminar el proyecto). 🕰️</p>
+  <p>En inglés, cuando expresamos un deseo sobre una situación que es contraria a los hechos actuales, usamos   <span style="color: #2196F3;"><b>wish</b></span>  seguido de un verbo en tiempo pasado. En este caso, <strong style="color: #2196F3;">"I had"</strong> es la forma correcta porque estás expresando un deseo sobre algo que no es cierto en el presente (no tienes más tiempo para terminar el proyecto). 🕰️</p>
   <p>Por ejemplo, si no tienes un coche pero te gustaría tener uno, dirías: <span style="color: #4caf50;"><strong>"I wish I had a car".</strong></span> 🚗</p>
-  <p><strong>¡Sigue practicando y mejorarás!</strong> 📚💪</p>
+  <p><strong>¡Sigue practicando y mejorarás!</strong> 📚💪</p> (ESTO LO CAMBIRAS POR EMOJIS DIFERENTES Y MENSJAES DIFENTEE)
   
   Usa esta estructura para generar el feedback para la pregunta proporcionada.
 `;
