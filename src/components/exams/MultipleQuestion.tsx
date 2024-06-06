@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Question } from "@/interfaces/Exam";
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
   correctAnswer: string[];
   isGraded: boolean;
   disabled?: boolean;
+  textRefencePadre?: string;
 }
 
 const MultipleChoiceQuestion = ({
@@ -17,9 +18,61 @@ const MultipleChoiceQuestion = ({
   correctAnswer = [],
   isGraded,
   disabled,
+  textRefencePadre = "",
 }: Props) => {
   const [selectedOptions, setSelectedOptions] =
     React.useState<string[]>(selectedAnswer);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  const [feedback, setFeedback] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleFeedback = async () => {
+    setLoading(true);
+    setFeedback("");
+
+    try {
+      const response = await fetch("/api/openia/get-feedback-answer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question:
+            `${
+              textRefencePadre.length != 0
+                ? "TEXO PADRE REFECNCIA DE LA PREGUNTA :/n/n " +
+                  textRefencePadre +
+                  " --->"
+                : "->  "
+            }  ` + title,
+          options,
+          selectedAnswer,
+          correctAnswer,
+        }),
+      });
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+
+      while (!done) {
+        const { value, done: streamDone } = await reader!.read();
+        done = streamDone;
+        const chunk = decoder.decode(value, { stream: true });
+        setFeedback((prevFeedback) => {
+          const newFeedback = prevFeedback + chunk;
+          return newFeedback;
+        });
+        if (feedbackRef.current) {
+          feedbackRef.current.scrollTop = feedbackRef.current.scrollHeight;
+        }
+      }
+    } catch (err) {
+      setFeedback("Failed to fetch feedback.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleOptionChange = (option: string) => {
     const updatedOptions = selectedOptions.includes(option)
@@ -63,6 +116,27 @@ const MultipleChoiceQuestion = ({
           </label>
         ))}
       </div>
+      {isGraded && (
+        <button
+          onClick={handleFeedback}
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
+          disabled={loading}
+        >
+          {loading ? "Obteniendo feedback..." : "Obtener Feedback"}
+        </button>
+      )}
+      {feedback && (
+        <section
+          ref={feedbackRef}
+          className="mt-4 bg-gray-800 p-4 rounded overflow-y-auto"
+        >
+          <h3 className="text-white text-lg mb-2">Feedback:</h3>
+          <div
+            className="text-gray-300"
+            dangerouslySetInnerHTML={{ __html: feedback }}
+          ></div>
+        </section>
+      )}
     </div>
   );
 };

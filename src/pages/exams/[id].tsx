@@ -119,6 +119,7 @@ const ExamDetail = () => {
             correctAnswer={question.correctAnswer}
             isGraded={isGraded}
             disabled={isGraded}
+            textRefencePadre={lecture}
           />
         )}
       </div>
