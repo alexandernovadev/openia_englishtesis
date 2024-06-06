@@ -18,14 +18,29 @@ const ExamDetail = () => {
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState<{ [key: string]: any }>({});
   const [isGraded, setIsGraded] = useState(false);
+  const [lecture, setLecture] = useState('');
 
   useEffect(() => {
     if (id) {
       const fetchExamData = async () => {
         try {
           const response = await fetch(`/api/exams/${id}`);
+        
+          
           const data = await response.json();
+
           setExamData(data);
+          console.log(data);
+          
+          if (data&& data.lectureID) {
+            
+            const lectureEXamReferencAPI = await fetch(`/api/lectures/${data.lectureID}`);
+            const lectureData = await lectureEXamReferencAPI.json();
+            console.log("lectureData",lectureData);
+            
+            setLecture(lectureData.content)
+          }
+ 
         } catch (error) {
           console.error("Failed to fetch exam data:", error);
         } finally {
@@ -94,6 +109,7 @@ const ExamDetail = () => {
             correctAnswer={question.correctAnswer}
             isGraded={isGraded}
             disabled={isGraded}
+            textRefencePadre={lecture}
           />
         ) : (
           <MultipleChoiceQuestion

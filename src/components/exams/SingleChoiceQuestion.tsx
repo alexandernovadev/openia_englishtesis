@@ -9,6 +9,7 @@ interface Props {
   correctAnswer: string;
   isGraded: boolean;
   disabled?: boolean;
+  textRefencePadre?: string;
 }
 
 const SingleChoiceQuestion = ({
@@ -18,10 +19,17 @@ const SingleChoiceQuestion = ({
   correctAnswer,
   isGraded,
   disabled,
+  textRefencePadre = ""
 }: Props) => {
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
   const feedbackRef = useRef<HTMLDivElement>(null);
+
+
+  const speakWord = () => {
+    const utterance = new SpeechSynthesisUtterance(correctAnswer);
+    window.speechSynthesis.speak(utterance);
+  };
 
   const handleFeedback = async () => {
     setLoading(true);
@@ -34,7 +42,7 @@ const SingleChoiceQuestion = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          question: title,
+          question: `${textRefencePadre.length != 0?('TEXO PADRE REFECNCIA DE LA PREGUNTA :/n/n '+ textRefencePadre+' --->'):'->  ' }  `+ title,
           options,
           selectedAnswer,
           correctAnswer,
