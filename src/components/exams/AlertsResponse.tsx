@@ -39,9 +39,9 @@ export const AlertsResponse = ({ feedback, status }: Props) => {
       icon = <GiThink className="fill-current h-6 w-6 mr-4" />;
       break;
     default:
-      bgColorClass = "bg-gray-100";
-      borderColorClass = "border-gray-500";
-      iconColorClass = "text-gray-500";
+      bgColorClass = "bg-zinc-100";
+      borderColorClass = "border-zinc-500";
+      iconColorClass = "text-zinc-500";
       message = "Feedback";
   }
 

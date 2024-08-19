@@ -83,7 +83,7 @@ const MultipleChoiceQuestion = ({
   };
 
   return (
-    <div className="bg-slate-700 p-4 rounded-lg my-2">
+    <div className="bg-zinc-700 p-4 rounded-lg my-2">
       <h2 className="text-white text-lg mb-2">{title}</h2>
       <div>
         {options?.map((option) => (
@@ -119,7 +119,7 @@ const MultipleChoiceQuestion = ({
       {isGraded && (
         <button
           onClick={handleFeedback}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-zinc-300"
           disabled={loading}
         >
           {loading ? "Obteniendo feedback..." : "Obtener Feedback"}
@@ -128,11 +128,11 @@ const MultipleChoiceQuestion = ({
       {feedback && (
         <section
           ref={feedbackRef}
-          className="mt-4 bg-gray-800 p-4 rounded overflow-y-auto"
+          className="mt-4 bg-zinc-800 p-4 rounded overflow-y-auto"
         >
           <h3 className="text-white text-lg mb-2">Feedback:</h3>
           <div
-            className="text-gray-300"
+            className="text-zinc-300"
             dangerouslySetInnerHTML={{ __html: feedback }}
           ></div>
         </section>

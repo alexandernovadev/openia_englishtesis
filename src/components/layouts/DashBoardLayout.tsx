@@ -38,7 +38,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
   return (
     <div className="flex h-screen">
-      <div className="w-16 bg-gray-800 flex flex-col items-center pb-4 space-y-4 p-2 relative">
+      <div className="w-16 bg-zinc-800 flex flex-col items-center pb-4 space-y-4 p-2 relative">
         <Link href="/profile">
           <div className="text-green-500 cursor-pointer">
             <RxAvatar className="text-4xl" />

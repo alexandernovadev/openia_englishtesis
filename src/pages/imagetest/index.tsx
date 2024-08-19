@@ -32,7 +32,7 @@ const GenerateImage = () => {
         <input
           type="text"
           value={prompt}
-          className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+          className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-zinc-700 text-white"
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Enter prompt"
         />

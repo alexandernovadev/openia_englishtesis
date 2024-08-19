@@ -10,7 +10,7 @@ import Image from "next/image";
 import { LecureSkeleton } from "@/components/loadings/LecureSkeleton";
 import { HiMiniSpeakerWave } from "react-icons/hi2";
 import { FaBookAtlas } from "react-icons/fa6";
-import { SiGoogletranslate } from "react-icons/si";
+import { SiGoogletranzinc } from "react-icons/si";
 
 const LectureDetail = () => {
   const router = useRouter();
@@ -51,9 +51,9 @@ const LectureDetail = () => {
     );
   };
 
-  const openDictionaryGoogleTranslate = () => {
+  const openDictionaryGoogleTranzinc = () => {
     window.open(
-      `https://translate.google.com/?sl=en&tl=es&text=${wordActive}&op=translate`,
+      `https://tranzinc.google.com/?sl=en&tl=es&text=${wordActive}&op=tranzinc`,
       "_blank",
       "width=520,height=500"
     );
@@ -113,7 +113,7 @@ const LectureDetail = () => {
   if (error) {
     return (
       <DashboardLayout>
-        <div className="bg-gray-900 w-full h-screen text-center mt-4 text-red-500">
+        <div className="bg-zinc-900 w-full h-screen text-center mt-4 text-red-500">
           {error}
         </div>
       </DashboardLayout>
@@ -133,7 +133,7 @@ const LectureDetail = () => {
           </span>
         </Link>
       </section>
-      <div className="bg-gray-900 p-2 min-h-screen text-white">
+      <div className="bg-zinc-900 p-2 min-h-screen text-white">
         {lecture ? (
           <>
             <div className="flex flex-row justify-center items-center gap-3">
@@ -163,7 +163,7 @@ const LectureDetail = () => {
                   <span className=" font-bold mb-1 mx-2 text-white bg-green-600 rounded-lg p-1">
                     {lecture.level}
                   </span>
-                  <span className="text-gray-400 text-[12px] mx-3">
+                  <span className="text-zinc-400 text-[12px] mx-3">
                     Created at:{" "}
                     {new Date(lecture.createdAt!).toLocaleDateString()}
                   </span>
@@ -175,7 +175,7 @@ const LectureDetail = () => {
               {renderMarkdownWithClickableWords(remainingContent)}
             </div>
 
-            <section className="w-full bg-gray-800 sticky bottom-0 rounded-xl p-2 border-white border">
+            <section className="w-full bg-zinc-800 sticky bottom-0 rounded-xl p-2 border-white border">
               {wordActive.length == 0 ? (
                 <h3>Select Word</h3>
               ) : (
@@ -193,10 +193,10 @@ const LectureDetail = () => {
                     <FaBookAtlas />
                   </span>
                   <span
-                    onClick={openDictionaryGoogleTranslate}
+                    onClick={openDictionaryGoogleTranzinc}
                     className="cursor-pointer mt-2"
                   >
-                    <SiGoogletranslate />
+                    <SiGoogletranzinc />
                   </span>
                 </section>
               )}

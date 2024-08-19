@@ -8,7 +8,7 @@ const Profile = () => {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col items-center p-6 bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl mx-auto mt-10">
+      <div className="flex flex-col items-center p-6 bg-zinc-800 rounded-lg shadow-lg w-full max-w-2xl mx-auto mt-10">
         <h1 className="text-3xl font-bold mb-4 text-green-500">User Profile</h1>
         <div className="w-24 h-24 rounded-full overflow-hidden mb-4">
           <img
@@ -19,11 +19,11 @@ const Profile = () => {
         </div>
         <div className="text-center">
           <p className="text-xl font-semibold mb-2 capitalize">{user.username}</p>
-          <p className="text-lg text-gray-400 mb-2">{user.email}</p>
-          <p className="text-md text-gray-500">
+          <p className="text-lg text-zinc-400 mb-2">{user.email}</p>
+          <p className="text-md text-zinc-500">
             Role: <span className="capitalize">{user.role}</span>
           </p>
-          <p className="text-md text-gray-500">
+          <p className="text-md text-zinc-500">
             Language Preference: <span>{user.languagePreference}</span>
           </p>
         </div>

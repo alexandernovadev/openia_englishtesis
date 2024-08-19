@@ -134,11 +134,11 @@ const GenerateTexts = ({
             setTopicUserDB && setTopicUserDB(e.target.value);
           }}
           placeholder="Elige un tema del texto que IAtin te generará..."
-          className="px-4 py-2 flex-1 mr-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+          className="px-4 py-2 flex-1 mr-4 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-zinc-700 text-white"
         />
         <button
           type="submit"
-          className="px-4 py-2 w-1/6 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300"
+          className="px-4 py-2 w-1/6 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-zinc-300"
           disabled={loading}
         >
           {loading ? "Generating..." : "Generate Text"}
@@ -150,7 +150,7 @@ const GenerateTexts = ({
         className="mt-4 p-4 border rounded h-auto max-h-[620px] h-m overflow-y-scroll"
       >
         {text.length === 0 && (
-          <div className="text-center text-gray-400">
+          <div className="text-center text-zinc-400">
             No text generated yet.
           </div>
         )}

@@ -53,7 +53,7 @@ const LectureGenerator = () => {
   return (
     <DashboardLayout>
       {showConfetti && <ConfettiExplosion />}
-      <div className="bg-gray-900 p-4 w-full h-full">
+      <div className="bg-zinc-900 p-4 w-full h-full">
         <section className="flex justify-between items-center">
           <div className="flex justify-center items-center">
             <h2 className="text-2xl font-bold mx-5 text-center text-white">
@@ -81,7 +81,7 @@ const LectureGenerator = () => {
                 name="levels"
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
-                className="bg-gray-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-zinc-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="A1">A1</option>
                 <option value="A2">A2</option>
@@ -100,7 +100,7 @@ const LectureGenerator = () => {
                 name="paragraphs"
                 value={paragraphs}
                 onChange={(e) => setParagraphs(parseInt(e.target.value, 10))}
-                className="bg-gray-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-zinc-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value={1}>1</option>
                 <option value={2}>2</option>

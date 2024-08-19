@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import DashboardLayout from "@/components/layouts/DashBoardLayout";
-import { defaultPlaceholderGod } from './data';
+import { defaultPlaceholderGod } from './data'
 
+// Deprecated
 const GenerateExams: React.FC = () => {
   const [prompt, setPrompt] = useState<string>("");
   const [level, setLevel] = useState<string>("A1");
@@ -52,13 +53,13 @@ const GenerateExams: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <div className="dark:bg-gray-900 dark:text-gray-100 h-[100%] p-4 overflow-scroll">
+      <div className="dark:bg-zinc-900 dark:text-zinc-100 h-[100%] p-4 overflow-scroll">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block">
               USER que quiere tematica:
               <textarea
-                className="w-full mt-1 p-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-500"
+                className="w-full mt-1 p-2 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-zinc-100 dark:focus:ring-zinc-500"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
               />
@@ -68,7 +69,7 @@ const GenerateExams: React.FC = () => {
             <label className="block">
               Level:
               <select
-                className="w-full mt-1 p-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-500"
+                className="w-full mt-1 p-2 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-zinc-100 dark:focus:ring-zinc-500"
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
               >
@@ -86,7 +87,7 @@ const GenerateExams: React.FC = () => {
               Amount of Questions:
               <input
                 type="number"
-                className="w-full mt-1 p-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-500"
+                className="w-full mt-1 p-2 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-zinc-100 dark:focus:ring-zinc-500"
                 value={ammountQuestions}
                 onChange={(e) => setAmmountQuestions(Number(e.target.value))}
               />
@@ -96,7 +97,7 @@ const GenerateExams: React.FC = () => {
             <label className="block">
               Difficulty:
               <select
-                className="w-full mt-1 p-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-500"
+                className="w-full mt-1 p-2 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-zinc-100 dark:focus:ring-zinc-500"
                 value={difficultyExam}
                 onChange={(e) => setDifficultyExam(e.target.value)}
               >
@@ -118,7 +119,7 @@ const GenerateExams: React.FC = () => {
             Generated Prompt:
             <textarea
               ref={textRef}
-              className="w-full h-32 p-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-500"
+              className="w-full h-32 p-2 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-zinc-100 dark:focus:ring-zinc-500"
               value={generatedPrompt}
               readOnly
             />
@@ -129,7 +130,7 @@ const GenerateExams: React.FC = () => {
             Generated Exam Text:
             <textarea
               ref={textRef}
-              className="w-full h-64 p-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:focus:ring-gray-500"
+              className="w-full h-64 p-2 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-zinc-100 dark:focus:ring-zinc-500"
               value={text}
               readOnly
             />

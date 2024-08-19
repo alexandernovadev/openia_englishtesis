@@ -136,7 +136,7 @@ const ExamDetail = () => {
             </span>
           </Link>
         </section>
-        <div className="bg-gray-900 p-5 min-h-screen text-white flex items-center justify-center">
+        <div className="bg-zinc-900 p-5 min-h-screen text-white flex items-center justify-center">
           <div className="animate-pulse text-xl font-bold">Loading...</div>
         </div>
       </DashboardLayout>
@@ -152,7 +152,7 @@ const ExamDetail = () => {
           </span>
         </Link>
       </section>
-      <div className="bg-gray-900 p-3 h-screen text-white">
+      <div className=" p-3 h-screen text-white">
         <h1 className="text-3xl font-bold mb-2">{examData?.title}</h1>
         <p className="text-xl">
           <span className="text-yellow-700">Difficulty:</span>

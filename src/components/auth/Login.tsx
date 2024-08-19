@@ -43,33 +43,33 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-zinc-900">
+      <div className="bg-zinc-800 p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-white">
           Login
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="email">
+            <label className="block text-zinc-300 mb-2" htmlFor="email">
               Email
             </label>
             <input
               id="email"
               type="email"
-              className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+              className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-zinc-700 text-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-300 mb-2" htmlFor="password">
+            <label className="block text-zinc-300 mb-2" htmlFor="password">
               Password
             </label>
             <input
               id="password"
               type="password"
-              className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+              className="w-full px-4 py-2 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-zinc-700 text-white"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

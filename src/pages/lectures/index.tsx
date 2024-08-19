@@ -30,7 +30,7 @@ const LectureList = () => {
   if (loading) {
     return (
       <DashboardLayout>
-        <div className="bg-gray-900 p-5 h-screen">
+        <div className="bg-zinc-900 p-5 h-screen">
           <h1 className="">Lectures</h1>
           <section className="overflow-scroll h-[94%]">
             <ul className="space-y-4">
@@ -39,14 +39,14 @@ const LectureList = () => {
                 .map((_, index) => (
                   <li
                     key={index}
-                    className="p-4 bg-gray-800 shadow rounded-lg flex items-center space-x-4 animate-pulse"
+                    className="p-4 bg-zinc-800 shadow rounded-lg flex items-center space-x-4 animate-pulse"
                   >
                     <div className="flex-shrink-0">
-                      <div className="h-12 w-12 bg-gray-500 rounded-full"></div>
+                      <div className="h-12 w-12 bg-zinc-500 rounded-full"></div>
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-gray-700 bg-gray-700 rounded h-6 w-32"></h2>
-                      <p className="text-gray-600 bg-gray-600 rounded h-4 w-24 mt-2"></p>
+                      <h2 className="text-xl font-semibold text-zinc-700 bg-zinc-700 rounded h-6 w-32"></h2>
+                      <p className="text-zinc-600 bg-zinc-600 rounded h-4 w-24 mt-2"></p>
                     </div>
                   </li>
                 ))}
@@ -81,17 +81,17 @@ const LectureList = () => {
 
   return (
     <DashboardLayout>
-      <div className="bg-gray-900 p-5 h-screen">
+      <div className="bg-zinc-900 p-5 h-screen">
         <h1 className="text-5xl font-bold text-green-600 mb-6">Lectures</h1>
         <section className="overflow-scroll h-[94%] pb-16">
           <ul className="space-y-4">
             {lectures.map((lecture: any) => (
               <li
                 key={lecture._id}
-                className="p-4 bg-gray-800 shadow rounded-lg flex items-center space-x-4 cursor-pointer"
+                className="p-4 bg-zinc-800 shadow rounded-lg flex items-center space-x-4 cursor-pointer"
               >
                 <div className="flex-shrink-0">
-                  <div className="h-12 w-12 bg-gray-500 rounded-full overflow-hidden">
+                  <div className="h-12 w-12 bg-zinc-500 rounded-full overflow-hidden">
                     {lecture.img ? (
                       <Image
                         src={`data:image/png;base64,${lecture.img}`}
@@ -116,7 +116,7 @@ const LectureList = () => {
                     {lecture.content.split("\n")[0].replace(/#/g, "")}
                   </h2>
 
-                  <p className="text-gray-400">ID: {lecture._id}</p>
+                  <p className="text-zinc-400">ID: {lecture._id}</p>
 
                   <div className="flex flex-row space-x-2 mt-2">
                     <button

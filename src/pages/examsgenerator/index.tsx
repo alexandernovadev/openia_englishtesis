@@ -87,7 +87,7 @@ const ExamGenerator = () => {
   return (
     <DashboardLayout>
       {showConfetti && <ConfettiExplosion />}
-      <div className="bg-gray-900 p-4 w-full h-full">
+      <div className="bg-zinc-900 p-4 w-full h-full">
         <section className="flex justify-between items-center">
           <div className="flex justify-center items-center">
             <h4 className="text-2xl font-bold mx-5 text-center text-white border p-2 rounded-lg">
@@ -104,7 +104,7 @@ const ExamGenerator = () => {
                 </h6>
                 <select
                   name="propmttopic"
-                  className="max-w-[500px] px-4 py-2 mb-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
+                  className="max-w-[500px] px-4 py-2 mb-2 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-zinc-700 text-white"
                   value={topicUser}
                   onChange={(e) => setTopicUser(e.target.value)}
                 >
@@ -148,7 +148,7 @@ const ExamGenerator = () => {
                 name="levels"
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
-                className="bg-gray-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-zinc-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="A1">A1</option>
                 <option value="A2">A2</option>
@@ -170,7 +170,7 @@ const ExamGenerator = () => {
                 onChange={(e) =>
                   setAmmountQuestions(parseInt(e.target.value, 10))
                 }
-                className="bg-gray-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-zinc-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value={1}>1</option>
                 <option value={2}>2</option>
@@ -193,7 +193,7 @@ const ExamGenerator = () => {
                 onChange={(e) =>
                   setDifficulty(e.target.value as Exam["difficulty"])
                 }
-                className="bg-gray-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-zinc-800 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value={"HARD"}>Hard</option>
                 <option value={"EASY"}>Easy</option>

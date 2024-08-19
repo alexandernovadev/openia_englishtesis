@@ -46,12 +46,12 @@ const ExamsPage = () => {
             examData.map((exam) => (
               <div
                 key={exam._id}
-                className="my-3 bg-gray-800 shadow rounded-lg flex items-center space-x-4"
+                className="my-3 bg-zinc-800 shadow rounded-lg flex items-center space-x-4"
               >
                 {" "}
                 <div className="px-2 py-2 flex flex-col">
                   <h2 className="text-2xl font-bold mb-2">{exam.title}</h2>
-                  <p className="text-gray-600">
+                  <p className="text-zinc-600">
                     Created at: {new Date(exam.createdAt!).toLocaleDateString()}
                   </p>
                   <>Prguntas : {exam.questions.length}</>
