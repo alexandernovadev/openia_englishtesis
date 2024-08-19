@@ -16,11 +16,13 @@ export default async function handler(
   const { prompt, level, ammountQuestions, difficultyExam } = req.body;
 
   const detailedPrompt = `
-  Given the user prompt: "${prompt}", you need to create an English exam to evaluate the user's reading comprehension skills.
-  Consider the user's proficiency level: ${level} and the specified difficulties: ${String(difficultyExam)} of (HARD, Midle, easy).
+  Given the user prompt: "${prompt}", you need to create an English exam to evaluate the user's skills.
+  Consider the user's proficiency level: 
+  ${level} and the specified difficulties: ${String(difficultyExam)} of (HARD, Midle, easy).
   You should act as an advanced English teacher, ensuring coherence in the questions, options, and correct answers.
 
-  The output should be in JSON format and include ${ammountQuestions} questions. Additionally, create a coherent and creative title for the exam that matches the content and level.
+  The output should be in JSON format and include ${ammountQuestions} questions. 
+  Additionally, create a coherent and creative title for the exam that matches the content and level.
 
   Example output: 
 
@@ -52,7 +54,10 @@ export default async function handler(
 
   Do not include ' '''json' in the response.
 
-  Ensure each question has unique and distinct options, and the correct answer is precise and accurate.
+  Ensure each question has unique and distinct options, 
+  and the correct answer is precise and accurate.
+
+  Please be creative with each ansser We need variety
   `;
 
   const stream = await openai.chat.completions.create({
@@ -63,7 +68,7 @@ export default async function handler(
         content: detailedPrompt,
       },
     ],
-    model: "gpt-4",
+    model: "gpt-4o",
     temperature: 0.3,
   });
 

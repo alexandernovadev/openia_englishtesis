@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
 import { Question } from "@/interfaces/Exam";
 
 interface Props {
@@ -19,12 +18,12 @@ const SingleChoiceQuestion = ({
   correctAnswer,
   isGraded,
   disabled,
-  textRefencePadre = ""
+  textRefencePadre = "",
 }: Props) => {
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false); // Nueva variable de estado
   const feedbackRef = useRef<HTMLDivElement>(null);
-
 
   const speakWord = () => {
     const utterance = new SpeechSynthesisUtterance(correctAnswer);
@@ -42,7 +41,14 @@ const SingleChoiceQuestion = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          question: `${textRefencePadre.length != 0?('TEXO PADRE REFECNCIA DE LA PREGUNTA :/n/n '+ textRefencePadre+' --->'):'->  ' }  `+ title,
+          question:
+            `${
+              textRefencePadre.length != 0
+                ? "TEXO PADRE REFECNCIA DE LA PREGUNTA :/n/n " +
+                  textRefencePadre +
+                  " --->"
+                : "->  "
+            }  ` + title,
           options,
           selectedAnswer,
           correctAnswer,
@@ -72,6 +78,11 @@ const SingleChoiceQuestion = ({
     }
   };
 
+  const handleChange = (option: string) => {
+    onChange(option);
+    setShowCorrectAnswer(true); // Mostrar la respuesta correcta después de seleccionar una opción
+  };
+
   return (
     <div className="bg-slate-700 p-4 rounded-lg my-2">
       <h2 className="text-white text-lg mb-2">{title}</h2>
@@ -80,9 +91,9 @@ const SingleChoiceQuestion = ({
           <label
             key={option}
             className={`block mb-2 p-2 rounded-lg justify-center ${
-              isGraded && option === correctAnswer
+              (isGraded || showCorrectAnswer) && option === correctAnswer
                 ? "border-2 border-green-500"
-                : isGraded &&
+                : (isGraded || showCorrectAnswer) &&
                   option === selectedAnswer &&
                   option !== correctAnswer
                 ? "border-2 border-red-500"
@@ -94,12 +105,12 @@ const SingleChoiceQuestion = ({
               name={`sq-|${title}`}
               value={option}
               checked={selectedAnswer === option}
-              onChange={() => onChange(option)}
+              onChange={() => handleChange(option)} // Usar el nuevo handleChange
               disabled={disabled}
               className="mr-2"
             />
             {option}
-            {isGraded && option === selectedAnswer && (
+            {(isGraded || showCorrectAnswer) && option === selectedAnswer && (
               <span className="mx-4 text-xs underline font-bold text-yellow-600">
                 TU SELECCION
               </span>
