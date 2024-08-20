@@ -10,7 +10,7 @@ import Image from "next/image";
 import { LecureSkeleton } from "@/components/loadings/LecureSkeleton";
 import { HiMiniSpeakerWave } from "react-icons/hi2";
 import { FaBookAtlas } from "react-icons/fa6";
-import { SiGoogletranzinc } from "react-icons/si";
+import { Si2K } from "react-icons/si";
 
 const LectureDetail = () => {
   const router = useRouter();
@@ -196,7 +196,7 @@ const LectureDetail = () => {
                     onClick={openDictionaryGoogleTranzinc}
                     className="cursor-pointer mt-2"
                   >
-                    <SiGoogletranzinc />
+                    <Si2K />
                   </span>
                 </section>
               )}
