@@ -16,7 +16,7 @@ export default async function handler(
   const { prompt, level, ammountQuestions, difficultyExam } = req.body;
 
   const detailedPrompt = `
-  Given the user prompt: "${prompt}", you need to create an English exam to evaluate the user's skills.
+  Given the user prompt: "${prompt}", you need to create an English grammar exam to evaluate the user's grammar skills.
   Consider the user's proficiency level: 
   ${level} and the specified difficulties: ${String(difficultyExam)} of (HARD, Midle, easy).
   You should act as an advanced English teacher, ensuring coherence in the questions, options, and correct answers.
@@ -58,6 +58,7 @@ export default async function handler(
   and the correct answer is precise and accurate.
 
   Please be creative with each ansser We need variety
+  Try to use unique and multiple intercaladas 
   `;
 
   const stream = await openai.chat.completions.create({

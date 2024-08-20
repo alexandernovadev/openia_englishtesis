@@ -18,29 +18,33 @@ const ExamDetail = () => {
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState<{ [key: string]: any }>({});
   const [isGraded, setIsGraded] = useState(false);
-  const [lecture, setLecture] = useState('');
+  const [lecture, setLecture] = useState("");
 
   useEffect(() => {
     if (id) {
       const fetchExamData = async () => {
         try {
           const response = await fetch(`/api/exams/${id}`);
-        
-          
+
           const data = await response.json();
+
+          // Mezclar las preguntas aleatoriamente
+          if (data && data.questions) {
+            data.questions.sort(() => Math.random() - 0.5);
+          }
 
           setExamData(data);
           console.log(data);
-          
-          if (data&& data.lectureID) {
-            
-            const lectureEXamReferencAPI = await fetch(`/api/lectures/${data.lectureID}`);
+
+          if (data && data.lectureID) {
+            const lectureEXamReferencAPI = await fetch(
+              `/api/lectures/${data.lectureID}`
+            );
             const lectureData = await lectureEXamReferencAPI.json();
-            console.log("lectureData",lectureData);
-            
-            setLecture(lectureData.content)
+            console.log("lectureData", lectureData);
+
+            setLecture(lectureData.content);
           }
- 
         } catch (error) {
           console.error("Failed to fetch exam data:", error);
         } finally {
@@ -85,10 +89,12 @@ const ExamDetail = () => {
         userAnswer,
         question.correctAnswer.split(",").map((x: string) => x.trim())
       );
-
-      console.log("\n");
-      console.log(isCorrect);
     }
+
+    // Mezclar las opciones de la pregunta
+    const shuffledOptions = [...question.options].sort(
+      () => Math.random() - 0.5
+    );
 
     return (
       <div key={question._id} className="relative">
@@ -103,7 +109,7 @@ const ExamDetail = () => {
         )}
         {question.type === "UNIQUE" ? (
           <SingleChoiceQuestion
-            question={question}
+            question={{ ...question, options: shuffledOptions }}
             onChange={(value) => handleAnswerChange(question._id, value)}
             selectedAnswer={userAnswer}
             correctAnswer={question.correctAnswer}
@@ -113,7 +119,7 @@ const ExamDetail = () => {
           />
         ) : (
           <MultipleChoiceQuestion
-            question={question}
+            question={{ ...question, options: shuffledOptions }}
             onChange={(value) => handleAnswerChange(question._id, value)}
             selectedAnswer={userAnswer}
             correctAnswer={question.correctAnswer}

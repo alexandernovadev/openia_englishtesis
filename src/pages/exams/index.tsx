@@ -47,7 +47,7 @@ const ExamsPage = () => {
             <thead className="bg-zinc-800">
               <tr>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                  Title
+                  Title 
                 </th>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                   Created At
