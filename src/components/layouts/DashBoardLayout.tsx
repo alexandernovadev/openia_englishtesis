@@ -17,9 +17,13 @@ import { useRouter } from "next/router";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  classNameChildren?: string;
 }
 
-const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+const DashboardLayout = ({
+  children,
+  classNameChildren = "",
+}: DashboardLayoutProps) => {
   const role = useSelector((state: RootState) => state.user.role);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -90,7 +94,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         </div>
       </div>
       <div className="w-full h-full my-6 flex justify-center">
-        <section className="w-full max-w-[1080px] overflow-auto pb-16">{children}</section>
+        <section className={`w-full max-w-[1080px] ${classNameChildren}`}>
+          {children}
+        </section>
       </div>
     </div>
   );

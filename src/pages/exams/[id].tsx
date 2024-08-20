@@ -91,11 +91,6 @@ const ExamDetail = () => {
       );
     }
 
-    // Mezclar las opciones de la pregunta
-    const shuffledOptions = [...question.options].sort(
-      () => Math.random() - 0.5
-    );
-
     return (
       <div key={question._id} className="relative">
         {isGraded && (
@@ -109,7 +104,7 @@ const ExamDetail = () => {
         )}
         {question.type === "UNIQUE" ? (
           <SingleChoiceQuestion
-            question={{ ...question, options: shuffledOptions }}
+            question={{ ...question, options: question.options }}
             onChange={(value) => handleAnswerChange(question._id, value)}
             selectedAnswer={userAnswer}
             correctAnswer={question.correctAnswer}
@@ -119,7 +114,7 @@ const ExamDetail = () => {
           />
         ) : (
           <MultipleChoiceQuestion
-            question={{ ...question, options: shuffledOptions }}
+            question={{ ...question, options: question.options }}
             onChange={(value) => handleAnswerChange(question._id, value)}
             selectedAnswer={userAnswer}
             correctAnswer={question.correctAnswer}

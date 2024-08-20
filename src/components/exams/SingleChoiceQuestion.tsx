@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Question } from "@/interfaces/Exam";
 
 interface Props {
@@ -20,10 +20,21 @@ const SingleChoiceQuestion = ({
   disabled,
   textRefencePadre = "",
 }: Props) => {
+  const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false); // Nueva variable de estado
+  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false); 
   const feedbackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Asegurarse de que options no sea undefined antes de mezclar
+    if (options && options.length > 0) {
+      const shuffleArray = (array: string[]) => {
+        return array.sort(() => Math.random() - 0.5);
+      };
+      setShuffledOptions(shuffleArray([...options]));
+    }
+  }, [options]);
 
   const speakWord = () => {
     const utterance = new SpeechSynthesisUtterance(correctAnswer);
@@ -80,14 +91,14 @@ const SingleChoiceQuestion = ({
 
   const handleChange = (option: string) => {
     onChange(option);
-    setShowCorrectAnswer(true); // Mostrar la respuesta correcta después de seleccionar una opción
+    setShowCorrectAnswer(true); 
   };
 
   return (
     <div className="bg-zinc-700 p-4 rounded-lg my-2">
       <h2 className="text-white text-lg mb-2">{title}</h2>
       <div>
-        {options?.map((option) => (
+        {shuffledOptions?.map((option) => (
           <label
             key={option}
             className={`block mb-2 p-2 rounded-lg justify-center ${
@@ -105,7 +116,7 @@ const SingleChoiceQuestion = ({
               name={`sq-|${title}`}
               value={option}
               checked={selectedAnswer === option}
-              onChange={() => handleChange(option)} // Usar el nuevo handleChange
+              onChange={() => handleChange(option)} 
               disabled={disabled}
               className="mr-2"
             />

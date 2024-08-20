@@ -3,7 +3,7 @@ import React from "react";
 
 const GrammarPage = () => {
   return (
-    <DashboardLayout>
+    <DashboardLayout classNameChildren=" overflow-auto pb-16">
       <h1>Comparatives and Superlatives</h1>
 
       <p>
