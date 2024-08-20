@@ -2,7 +2,7 @@
 
 
 The purpose if this app is try to copy the methodolgy of english books
-and use LLM to improve the intaractivty with the student.
+and use LLM to improve the intaractivty with the student.Digi123..Ocean
 
 
 ## Todo My notes
