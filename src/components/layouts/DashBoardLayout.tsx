@@ -90,7 +90,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         </div>
       </div>
       <div className="w-full h-full my-6 flex justify-center">
-        <section className="w-full max-w-[1080px]">{children}</section>
+        <section className="w-full max-w-[1080px] overflow-auto pb-16">{children}</section>
       </div>
     </div>
   );
